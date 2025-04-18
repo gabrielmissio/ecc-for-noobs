@@ -1,3 +1,5 @@
 knownPublicKeys.json
-progress.json
+progress-*.json
+config.json
+matches-*
 match-*

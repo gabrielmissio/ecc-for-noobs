@@ -1,4 +1,8 @@
 {
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./src/main.mjs"
+  },
   "dependencies": {
     "elliptic": "^6.6.1"
   }
