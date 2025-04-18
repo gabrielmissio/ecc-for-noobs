@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <link rel="stylesheet" href="./style.css">
-  <title>Ethereum ECC Address Generator</title>
+  <title>ECC For Cripto Noobs</title>
 </head>
 <body>
   <div class="container">
-    <h1>Ethereum ECC Address Generator (secp256k1)</h1>
+    <h1>Ethereum & Bitcoin Address Generator (secp256k1)</h1>
 
     <input id="privateKeyInput" type="text" placeholder="Enter private key (hex, 64 chars)">
     <button id="generateBtn">Generate Address</button>
@@ -20,6 +20,8 @@
         <p><strong>Public Key X:</strong> <span id="publicKeyX"></span></p>
         <p><strong>Public Key Y:</strong> <span id="publicKeyY"></span></p>
         <p><strong>Ethereum Address:</strong> <span id="ethAddress"></span></p>
+        <p><strong>Bitcoin Legacy Address (P2PKH):</strong> <span id="btcLegacy"></span></p>
+        <p><strong>Bitcoin SegWit Address (P2SH-P2WPKH):</strong> <span id="btcSegwit"></span></p>
       </div>      
   </div>
 
