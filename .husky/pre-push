@@ -1,0 +1,5 @@
+# uncomment after setting up test script
+# npm run test
+  
+# remove this line after setting up test script
+echo "test script not set up yet"
