@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="./style.css">
+  <title>Ethereum ECC Address Generator</title>
+</head>
+<body>
+  <div class="container">
+    <h1>Ethereum ECC Address Generator (secp256k1)</h1>
+
+    <input id="privateKeyInput" type="text" placeholder="Enter private key (hex, 64 chars)">
+    <button id="generateBtn">Generate Address</button>
+
+    <!-- <canvas id="curveCanvas" width="400" height="400"></canvas> -->
+
+    <div id="output">
+        <p><strong>Private Key:</strong> <span id="privateKey"></span></p>
+        <p><strong>Public Key (full, uncompressed):</strong> <span id="publicKey"></span></p>
+        <p><strong>Public Key X:</strong> <span id="publicKeyX"></span></p>
+        <p><strong>Public Key Y:</strong> <span id="publicKeyY"></span></p>
+        <p><strong>Ethereum Address:</strong> <span id="ethAddress"></span></p>
+      </div>      
+  </div>
+
+  <script type="module" src="./main.js"></script>
+</body>
+</html>
