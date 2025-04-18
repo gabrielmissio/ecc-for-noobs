@@ -1,10 +1,19 @@
 {
     "maxMemory": 8192,
-    "maxCpuNumber": 4,
+    "maxCpuNumber": 42,
     "publicKeysList": [
         "0423314d19b5eff3c387a420b92c3c3135995d268ece08076a59de4e4dc5356876fd254f9a8cc854afecd1d2a7ba16599671ac00bfa98c500a74ed9c906769a871",
         "0462e907b15cbf27d5425399ebf6f0fb50ebb88f18c57b4edf3e5a3d4ec9be1bb953f4d2e0e61fd6e3ad419b7e0330b3317d30b5c7a16b60f4f5f98a7e2e287b7e"
     ],
-    "legacyAddressesList": [],
-    "segWitAddressesList": []
+    "legacyAddressesList": [
+        "19Qw1F2XeJBSFkZn3gj4e8yH1XD49zorxt"
+    ],
+    "segWitAddressesList": [
+        "bc1qq6hag67dl53wl99vzg42z8eyzfz2xlkvxechjp",
+        "bc1qd5my8ddrxkumnw2chafp6yqzqq82vqmk3f0gyq"
+    ],
+    "p2shSegWitAddressesList": [
+        "37ikgSWtXptgUeVshZV7PbBZwxce1BPoBq",
+        "36mwXuH4FVaeLuMUsmyU7YvVXKCcuZyP5N"
+    ]
 }

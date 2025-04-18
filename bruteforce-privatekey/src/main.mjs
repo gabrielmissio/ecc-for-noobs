@@ -35,9 +35,9 @@ const savePublicKeys = async (keys) => {
 const main = async () => {
   const config = await loadConfig();
   const maxCpu = Math.min(config.maxCpuNumber, cpus().length);
-  const publicKeys = config.publicKeysList.map(k => k.toLowerCase());
+  // const publicKeys = config.publicKeysList.map(k => k.toLowerCase());
 
-  await savePublicKeys(publicKeys);
+  // await savePublicKeys(publicKeys);
 
   console.log(`🧠 Launching ${maxCpu} worker(s)...\n`);
 
