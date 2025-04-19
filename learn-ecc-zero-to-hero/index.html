@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="./style.css">
+  <title>ECC For Cripto Noobs</title>
+</head>
+<body>
+  <div class="container">
+    <h1>Ethereum & Bitcoin Address Generator (secp256k1)</h1>
+
+    <input id="privateKeyInput" type="text" placeholder="Enter private key (hex, 64 chars)" value="0000000000000000000000000000000000000000000000000000000000000001">
+    <button id="generateBtn">Generate Address</button>
+
+    <div id="output">
+      <h2>Key Details</h2>
+      <p><strong>Private Key:</strong> <span id="privateKey"></span></p>
+      <p><strong>Public Key (full, uncompressed):</strong> <span id="publicKey"></span></p>
+      <p><strong>Public Key X:</strong> <span id="publicKeyX"></span></p>
+      <p><strong>Public Key Y:</strong> <span id="publicKeyY"></span></p>
+
+      <h2>Derived Addresses</h2>
+      <p><strong>Ethereum Address:</strong> <span id="ethAddress"></span></p>
+      <p><strong>Bitcoin Legacy Address (P2PKH):</strong> <span id="btcLegacy"></span></p>
+      <p><strong>Bitcoin SegWit Address (P2SH-P2WPKH):</strong> <span id="btcSegwit"></span></p>
+    </div>
+
+    <div id="explanation">
+      <h2>📚 Learn: ECC & secp256k1</h2>
+      <p><strong>Private Key:</strong> A random number between 1 and n-1 (n = curve order).</p>
+      <p><strong>Public Key:</strong> Computed as <code>Q = k * G</code>, where:</p>
+      <ul>
+        <li><code>k</code>: private key</li>
+        <li><code>G</code>: generator point of secp256k1</li>
+        <li><code>Q</code>: public key point</li>
+      </ul>
+      <p><strong>Ethereum Address:</strong> last 20 bytes of <code>keccak256(X || Y)</code></p>
+      <p><strong>Bitcoin Address (P2PKH):</strong> base58check(SHA256 -> RIPEMD160 -> prepend 0x00 -> checksum)</p>
+      <p><strong>SegWit (P2SH-P2WPKH):</strong> script-hash of witness program</p>
+    </div>
+
+    <div id="signing">
+      <h2>✍️ ECC Signing Demo</h2>
+      <input id="messageInput" type="text" placeholder="Message to sign" />
+      <button id="signBtn">Sign Message</button>
+      <button id="verifyBtn">Verify Signature</button>
+      <p><strong>Signature:</strong> <span id="signatureOutput"></span></p>
+      <p><strong>Verification:</strong> <span id="verificationOutput"></span></p>
+    </div>
+
+    <div id="vanity">
+      <h2>🎯 Vanity Address Generator</h2>
+      <input id="vanityPrefix" type="text" placeholder="Prefix (e.g., 1BTC or 0xdead)" />
+      <button id="vanityBtn">Start Generating</button>
+      <p><strong>Match Found:</strong> <span id="vanityOutput"></span></p>
+
+      <p><strong>Attempts:</strong> <span id="vanityAttempts">0</span></p>
+      <p><strong>Elapsed Time:</strong> <span id="vanityElapsed">0s</span></p>
+
+    </div>
+  </div>
+
+  <script type="module" src="./main.js"></script>
+</body>
+</html>

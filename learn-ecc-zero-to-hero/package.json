@@ -1,0 +1,28 @@
+{
+  "name": "learn-ecc-zero-to-hero",
+  "version": "1.0.0",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "http-server": "^14.1.1",
+    "vite": "^6.3.1"
+  },
+  "dependencies": {
+    "@noble/hashes": "^1.7.2",
+    "@scure/base": "^1.2.4",
+    "bitcoinjs-lib": "^6.1.7",
+    "bs58": "^6.0.0",
+    "elliptic": "^6.6.1",
+    "ethers": "^6.13.5",
+    "js-sha3": "^0.9.3"
+  }
+}
