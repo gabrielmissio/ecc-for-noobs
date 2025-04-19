@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ECC For Crypto Noobs</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+  <title>Learn Elliptic Curve Cryptography</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css"> <!-- pico.css -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> <!-- github icoin -->
   <style>
     body {
       background: linear-gradient(to bottom right, #0f2027, #203a43, #2c5364);
@@ -14,7 +15,7 @@
     main {
       max-width: 960px;
       margin: auto;
-      padding: 2rem;
+      padding: 0.5rem 1.5rem;
       background: #ffffff10;
       border-radius: 16px;
       backdrop-filter: blur(12px);
@@ -26,6 +27,35 @@
       border: 1px solid #ffffff20;
       border-radius: 12px;
       background-color: #1c1f26cc;
+    }
+    section h2 {
+      margin-bottom: 1rem;
+    }
+    section article {
+     padding-top: 0.5rem;
+     padding-bottom: 0.5rem;
+     /* margin: 0.5rem 0; */
+     margin-bottom: 0;
+     margin-top: 1.5rem;
+    }
+    section article h3 {
+      margin-top: 0rem;
+      margin-bottom: 0.5rem;
+    }
+    section article p {
+      margin: 0.5rem 0;
+    }
+    #welcome {
+      padding: 1rem;
+    }
+    #welcome h1 {
+      margin-bottom: 1rem;
+    }
+    #vanityProgress {
+      margin-bottom: 2rem;
+    }
+    #vanityProgress p {
+      margin: 0.5rem 0;
     }
     input[type="text"] {
       background-color: #2c2f36;
@@ -59,8 +89,10 @@
 </head>
 <body>
   <main>
-    <h1>📚 Learn Elliptic Curve Cryptography (secp256k1) for Blockchain</h1>
-    <p>This interactive educational tool helps you understand the foundations of modern cryptography used in Bitcoin, Ethereum, and other blockchain platforms. You'll explore key generation, address formats, message signing, and more — all based on the secp256k1 curve used in ECDSA (Elliptic Curve Digital Signature Algorithm).</p>
+    <div id="welcome">
+      <h1>📚 Learn Elliptic Curve Cryptography</h1>
+      <p>This interactive educational tool helps you understand the foundations of modern cryptography used in Bitcoin, Ethereum, and other blockchain platforms. You'll explore key generation, address formats, message signing, and more — all based on the secp256k1 curve used in ECDSA (Elliptic Curve Digital Signature Algorithm).</p>
+    </div>
 
     <section id="keygen">
       <h2>🔑 Key Generator</h2>
@@ -104,10 +136,11 @@
       <input id="vanityPrefix" type="text" placeholder="Prefix (e.g. 0xabc or 1btc)">
       <button id="vanityBtn">Start</button>
       <button id="vanityStopBtn">Stop</button>
-      <p><strong>Result:</strong> <span id="vanityOutput"></span></p>
-      <p><strong>Attempts:</strong> <span id="vanityAttempts">0</span></p>
-      <p><strong>Time:</strong> <span id="vanityElapsed">0s</span></p>
-
+      <div id="vanityProgress">
+        <p><strong>Result:</strong> <span id="vanityOutput"></span></p>
+        <p><strong>Attempts:</strong> <span id="vanityAttempts">0</span></p>
+        <p><strong>Time:</strong> <span id="vanityElapsed">0s</span></p>
+      </div>
       <details>
         <summary>📘 What do prefixes mean?</summary>
         <ul>
@@ -119,7 +152,43 @@
         </ul>
       </details>
     </section>
+
+    <section id="how-it-works">
+      <h2>🧠 How It Works</h2>
+      <p>This section breaks down how each cryptographic operation is implemented under the hood. Whether you're new to blockchain or want to deepen your ECC understanding, these insights will help.</p>
+      <ul>
+        <li><strong>🔑 Key Generation:</strong> Your private key is just a number between 1 and n-1. From it, a public key is derived using elliptic curve multiplication: <code>Q = k × G</code>.</li>
+        <li><strong>📬 Ethereum Address:</strong> Derived from the last 20 bytes of the keccak256 hash of the public key.</li>
+        <li><strong>💸 Bitcoin Address:</strong> Derived using HASH160 (SHA256 + RIPEMD160), followed by Base58Check encoding.</li>
+        <li><strong>✍️ Signing:</strong> A SHA256 hash of the message is signed using ECDSA, producing a signature pair <code>{ r, s }</code>.</li>
+        <li><strong>✔️ Verification:</strong> The signature is validated using the public key against the message hash.</li>
+        <li><strong>🎯 Vanity Generator:</strong> Repeats key generation until an address starts with your desired prefix — a fun demo of computational effort!</li>
+      </ul>
+    </section>
+
+    <section id="about">
+      <h2>📘 About This Tool</h2>
+      <p>This educational playground was built to teach developers, students, and crypto enthusiasts how elliptic curve cryptography powers blockchain security — especially on secp256k1, used by both Bitcoin and Ethereum. It's interactive, transparent, and designed to build your intuition.</p>
+      <p>If you're learning, inspect the code, tweak parameters, and try unexpected inputs — it's a safe space to experiment with crypto fundamentals. 🚀</p>
+    </section>
   </main>
+
+  <footer style="text-align: center; padding: 1.5rem 0; color: #aaa; font-size: 0.9rem;">
+    <!-- <p style="margin-bottom: 0.5rem;">
+      © 2025 <strong style="color: #f3f4f6;">Intellectual property is a joke</strong><br>
+      Created by <a href="https://github.com/gabrielmissio" target="_blank" style="color: #60a5fa;">Gabriel Missio</a>
+    </p>
+     -->
+
+    <p style="margin-bottom: 0.5rem;">© 2025 <strong style="color: #f3f4f6;">Intellectual property is a joke</strong></p>
+  
+    <p style="margin: 0rem 0;">
+      <a href="https://github.com/gabrielmissio" target="_blank" style="color: #60a5fa; text-decoration: none; font-weight: 500;">
+        <i class="fa fa-github"></i>
+        View on GitHub
+      </a>
+    </p>
+  </footer>
 
   <script type="module" src="./src/ecc-wallet.js"></script>
   <script type="module" src="./src/sign-verify.js"></script>
