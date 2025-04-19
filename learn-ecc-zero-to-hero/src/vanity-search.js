@@ -1,5 +1,4 @@
 /* eslint-disable no-undef */
-// main.mjs
 import { ec as EC } from 'elliptic'
 import { bech32 } from '@scure/base'
 import { keccak256, getBytes, sha256 } from 'ethers'
@@ -9,17 +8,25 @@ import bs58 from 'bs58'
 const ec = new EC('secp256k1')
 
 // DOM Elements
+// Vanity Search Inputs
 const vanityPrefixInput = document.getElementById('vanityPrefix')
 const vanityBtn = document.getElementById('vanityBtn')
-const vanityOutput = document.getElementById('vanityOutput')
 const vanityStopBtn = document.getElementById('vanityStopBtn')
+
+// Vanity Search Output
+const vanityStatusOutput = document.getElementById('vanityStatus')
+const vanityAddressOutput = document.getElementById('vanityAddress')
+const vanityPrivateKeyOutput = document.getElementById('vanityPrivateKey')
+const vanityAttemptsOutput = document.getElementById('vanityAttempts')
+const vanityElapsedTimeOutput = document.getElementById('vanityElapsedTime')
 
 let isVanityRunning = false
 vanityStopBtn.addEventListener('click', () => {
-  isVanityRunning = false
-  vanityOutput.textContent += '\n⏹️ Search stopped.'
+  if (isVanityRunning) {
+    isVanityRunning = false
+    vanityStatusOutput.textContent = 'stopped'
+  }
 })
-
 vanityBtn.addEventListener('click', startVanitySearch)
 
 function startVanitySearch() {
@@ -48,8 +55,12 @@ function startVanitySearch() {
     return alert('Prefix too long! Must be at most 42 characters.')
   }
 
-
   isVanityRunning = true
+  vanityStatusOutput.textContent = 'running'
+  vanityElapsedTimeOutput.textContent = '...'
+  vanityPrivateKeyOutput.textContent = '...'
+  vanityAddressOutput.textContent = '...'
+
   const start = Date.now()
   let attempts = 0
 
@@ -67,13 +78,11 @@ function startVanitySearch() {
       const pubY = pubPoint.getY().toString('hex').padStart(64, '0')
       const rawBytes = getBytes('0x' + pubX + pubY)
       address = '0x' + keccak256(rawBytes).slice(-40)
-      console.log('Ethereum address:', address)
     } else if (isBtcP2PKH) {
       const compressedPubKey = getCompressedPubKey(pubPoint)
       const pubkeyBytes = hexToBytes(compressedPubKey)
       const pubkeyHash = hash160(pubkeyBytes)
       address = toBase58Check(pubkeyHash, 0x00) // P2PKH legacy (starts with 1)
-      console.log('P2PKH address:', address)
     } else if (isBtcP2SH) {
       const compressedPubKey = getCompressedPubKey(pubPoint)
       const pubkeyBytes = hexToBytes(compressedPubKey)
@@ -81,37 +90,46 @@ function startVanitySearch() {
       const segwitScript = new Uint8Array([0x00, 0x14, ...pubkeyHash])
       const redeemHash = hash160(segwitScript)
       address = toBase58Check(redeemHash, 0x05) // P2SH-P2WPKH (starts with 3)
-      console.log('P2SH-P2WPKH address:', address)
     }  else if (isBtcP2WPKH) {
       const compressedPubKey = getCompressedPubKey(pubPoint)
       const pubkeyBytes = hexToBytes(compressedPubKey)
       const pubkeyHash = hash160(pubkeyBytes)
-
       address = P2WPKH(pubkeyHash)
-      console.log('P2WPKH address:', address)
     } else if (isBtcP2TR) {
       alert('Taproot (P2TR) address generation is not implemented yet.')
       return
-
     } else {
       const compressedPubKey = getCompressedPubKey(pubPoint)
       const pubkeyBytes = hexToBytes(compressedPubKey)
       const pubkeyHash = hash160(pubkeyBytes)
       address = toBase58Check(pubkeyHash, 0x00) // Default fallback
-
-      console.log('Default address:', address)
     }
 
     attempts++
 
+    // Check if the generated address matches the prefix
     if (address.toLowerCase().startsWith(prefix.toLowerCase())) {
       const elapsed = ((Date.now() - start) / 1000).toFixed(2)
-      vanityOutput.textContent = `Address: ${address}\nPrivate Key: ${privHex}\nAttempts: ${attempts}\nTime: ${elapsed}s`
+
+      isVanityRunning = false
+      vanityStatusOutput.textContent = 'found'
+      vanityAddressOutput.textContent = address
+      vanityPrivateKeyOutput.textContent = privHex
+      vanityAttemptsOutput.textContent = attempts
+      vanityElapsedTimeOutput.textContent = `${elapsed}s`
+
       return
     }
 
-    if (attempts % 100 === 0) {
-      vanityOutput.textContent = `Searching... ${attempts} attempts`
+    // Update the UI with the current attempt
+    vanityAddressOutput.textContent = address
+    vanityPrivateKeyOutput.textContent = privHex
+
+    // Real-time update every 10 attempts
+    if (attempts % 10 === 0) {
+      vanityAttemptsOutput.textContent = attempts
+      const elapsed = ((Date.now() - start) / 1000).toFixed(2)
+      vanityElapsedTimeOutput.textContent = `${elapsed}s`
     }
 
     setTimeout(loop, 0)
@@ -147,8 +165,6 @@ function getCompressedPubKey(pubPoint) {
   return prefix + x
 }
 
-// P2WPKH Bech32 address - prefix bc1q
-// Native SegWit (v0), Pay to Witness Public Key Hash
 const P2WPKH = (hash) => {
   const words = bech32.toWords(hash)
   words.unshift(0x00) // witness version 0
