@@ -1,7 +1,5 @@
 /* eslint-disable no-undef */
-// main.mjs
 import { ec as EC } from 'elliptic'
-import { bech32 } from '@scure/base'
 import { Wallet, keccak256, getBytes, sha256, toUtf8Bytes } from 'ethers'
 import { ripemd160 } from '@noble/hashes/ripemd160'
 import bs58 from 'bs58'
@@ -23,24 +21,13 @@ const signBtn = document.getElementById('signBtn')
 const verifyBtn = document.getElementById('verifyBtn')
 const signatureOutput = document.getElementById('signatureOutput')
 const verificationOutput = document.getElementById('verificationOutput')
-const vanityPrefixInput = document.getElementById('vanityPrefix')
-const vanityBtn = document.getElementById('vanityBtn')
-const vanityOutput = document.getElementById('vanityOutput')
-const vanityStopBtn = document.getElementById('vanityStopBtn')
 
 let currentSig = null
 let currentPub = null
-let isVanityRunning = false
-
-vanityStopBtn.addEventListener('click', () => {
-  isVanityRunning = false
-  vanityOutput.textContent += '\n⏹️ Search stopped.'
-})
 
 generateBtn.addEventListener('click', generateAddress)
 signBtn.addEventListener('click', signMessage)
 verifyBtn.addEventListener('click', verifySignature)
-vanityBtn.addEventListener('click', startVanitySearch)
 
 function isValidPrivateKey(hex) {
   return /^[0-9a-fA-F]{64}$/.test(hex)
@@ -125,104 +112,6 @@ function verifySignature() {
   verificationOutput.style.color = verified ? 'green' : 'red'
 }
 
-function startVanitySearch() {
-  const prefix = vanityPrefixInput.value.trim()
-  if (!prefix) return alert('Enter a prefix to search')
-
-  const isEth = prefix.startsWith('0x')
-  const isBtcP2PKH = prefix.startsWith('1')
-  const isBtcP2SH = prefix.startsWith('3')
-  const isBtcP2WPKH = prefix.startsWith('bc1q')
-  const isBtcP2TR = prefix.startsWith('bc1p')
-
-  console.log('Searching for prefix:', prefix)
-  console.log('isEth:', isEth)
-  console.log('isBtcP2PKH:', isBtcP2PKH)
-  console.log('isBtcP2SH:', isBtcP2SH)
-  console.log('isBtcP2WPKH:', isBtcP2WPKH)
-  console.log('isBtcP2TR:', isBtcP2TR)
-  if (!isEth && !isBtcP2PKH && !isBtcP2SH && !isBtcP2WPKH && !isBtcP2TR) {
-    return alert('Invalid prefix! Must start with 0x (ETH), 1 (BTC P2PKH), 3 (BTC P2SH), or bc1 (BTC Bech32)')
-  }
-  if (prefix.length < 2) {
-    return alert('Prefix too short! Must be at least 2 characters.')
-  }
-  if (prefix.length > 42) {
-    return alert('Prefix too long! Must be at most 42 characters.')
-  }
-
-
-  isVanityRunning = true
-  const start = Date.now()
-  let attempts = 0
-
-  function loop() {
-    if (!isVanityRunning) return
-
-    const privKey = crypto.getRandomValues(new Uint8Array(32))
-    const privHex = Array.from(privKey).map(b => b.toString(16).padStart(2, '0')).join('')
-    const keyPair = ec.keyFromPrivate(privHex, 'hex')
-    const pubPoint = keyPair.getPublic()
-
-    let address = ''
-    if (isEth) {
-      const pubX = pubPoint.getX().toString('hex').padStart(64, '0')
-      const pubY = pubPoint.getY().toString('hex').padStart(64, '0')
-      const rawBytes = getBytes('0x' + pubX + pubY)
-      address = '0x' + keccak256(rawBytes).slice(-40)
-      console.log('Ethereum address:', address)
-    } else if (isBtcP2PKH) {
-      const compressedPubKey = getCompressedPubKey(pubPoint)
-      const pubkeyBytes = hexToBytes(compressedPubKey)
-      const pubkeyHash = hash160(pubkeyBytes)
-      address = toBase58Check(pubkeyHash, 0x00) // P2PKH legacy (starts with 1)
-      console.log('P2PKH address:', address)
-    } else if (isBtcP2SH) {
-      const compressedPubKey = getCompressedPubKey(pubPoint)
-      const pubkeyBytes = hexToBytes(compressedPubKey)
-      const pubkeyHash = hash160(pubkeyBytes)
-      const segwitScript = new Uint8Array([0x00, 0x14, ...pubkeyHash])
-      const redeemHash = hash160(segwitScript)
-      address = toBase58Check(redeemHash, 0x05) // P2SH-P2WPKH (starts with 3)
-      console.log('P2SH-P2WPKH address:', address)
-    }  else if (isBtcP2WPKH) {
-      const compressedPubKey = getCompressedPubKey(pubPoint)
-      const pubkeyBytes = hexToBytes(compressedPubKey)
-      const pubkeyHash = hash160(pubkeyBytes)
-
-      address = P2WPKH(pubkeyHash)
-      console.log('P2WPKH address:', address)
-    } else if (isBtcP2TR) {
-      alert('Taproot (P2TR) address generation is not implemented yet.')
-      return
-
-    } else {
-      const compressedPubKey = getCompressedPubKey(pubPoint)
-      const pubkeyBytes = hexToBytes(compressedPubKey)
-      const pubkeyHash = hash160(pubkeyBytes)
-      address = toBase58Check(pubkeyHash, 0x00) // Default fallback
-
-      console.log('Default address:', address)
-    }
-
-    attempts++
-
-    if (address.toLowerCase().startsWith(prefix.toLowerCase())) {
-      const elapsed = ((Date.now() - start) / 1000).toFixed(2)
-      vanityOutput.textContent = `Address: ${address}\nPrivate Key: ${privHex}\nAttempts: ${attempts}\nTime: ${elapsed}s`
-      return
-    }
-
-    if (attempts % 100 === 0) {
-      vanityOutput.textContent = `Searching... ${attempts} attempts`
-    }
-
-    setTimeout(loop, 0)
-  }
-
-  loop()
-}
-
 function hexToBytes(hex) {
   hex = hex.replace(/^0x/, '')
   return Uint8Array.from(hex.match(/.{2}/g).map(b => parseInt(b, 16)))
@@ -249,15 +138,3 @@ function getCompressedPubKey(pubPoint) {
   const prefix = y % 2n === 0n ? '02' : '03'
   return prefix + x
 }
-
-// P2WPKH Bech32 address - prefix bc1q
-// Native SegWit (v0), Pay to Witness Public Key Hash
-const P2WPKH = (hash) => {
-  const words = bech32.toWords(hash)
-  words.unshift(0x00) // witness version 0
-  return bech32.encode('bc', words)
-}
-
-// TODO...
-// P2TR (Taproot) - prefix bc1p
-// SegWit version 1, Pay to Taproot
