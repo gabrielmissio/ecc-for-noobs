@@ -6,7 +6,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "predeploy": "npm run build",
+    "deploy": "aws s3 sync dist s3://$WEB_SITE_BUCKET --delete --include '*'"
   },
   "keywords": [],
   "author": "",
