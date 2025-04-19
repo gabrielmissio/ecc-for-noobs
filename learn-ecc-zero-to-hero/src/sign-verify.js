@@ -21,7 +21,13 @@ signBtn.addEventListener('click', () => {
   const result = signMessage(msg, privKeyHex)
 
   if (result) {
-    signatureOutput.textContent = `r: ${result.r}, s: ${result.s}`
+    const msgHash = sha256(toUtf8Bytes(msg)).slice(2)
+    signatureOutput.textContent = `
+        Message Hash: ${msgHash}\n
+        Private Key: ${privKeyHex}\n
+        Public Key: ${currentPub.encode('hex')}\n
+        Signature: { r: ${result.r}, s: ${result.s} }
+    `
     verificationOutput.textContent = ''
     verificationOutput.style.color = 'initial'
   }
@@ -32,7 +38,7 @@ verifyBtn.addEventListener('click', () => {
   const verified = verifyMessage(msg)
   if (verified === null) return
 
-  verificationOutput.textContent = verified ? '✔ Valid Signature' : '❌ Invalid Signature'
+  verificationOutput.textContent = verified ? '✔ Signature is VALID for this message and public key.' : '❌ Signature is INVALID.'
   verificationOutput.style.color = verified ? 'green' : 'red'
 })
 

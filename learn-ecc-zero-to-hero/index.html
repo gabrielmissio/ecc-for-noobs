@@ -41,6 +41,15 @@
 
     <div id="signing">
       <h2>✍️ ECC Signing Demo</h2>
+      <p>This section demonstrates how digital signatures work using ECDSA over the secp256k1 curve.</p>
+      <ul>
+        <li>🔐 <strong>Private Key:</strong> used to generate the signature</li>
+        <li>📜 <strong>Message:</strong> any string you want to sign</li>
+        <li>🧮 <strong>Hash:</strong> the message is hashed with SHA-256 before signing</li>
+        <li>📌 <strong>Signature:</strong> a pair <code>{ r, s }</code> derived from the message hash and private key</li>
+        <li>✅ <strong>Verification:</strong> confirms if the signature is valid using the public key</li>
+      </ul>
+
       <input id="signerPrivateKey" type="text" placeholder="Enter private key (hex, 64 chars)" value="0000000000000000000000000000000000000000000000000000000000000001">
       <input id="messageInput" type="text" placeholder="Message to sign" />
       <button id="signBtn">Sign Message</button>
