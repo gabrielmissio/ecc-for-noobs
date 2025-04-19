@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 // main.mjs
 import { ec as EC } from 'elliptic'
-import { bech32, bech32m } from '@scure/base'
+import { bech32 } from '@scure/base'
 import { Wallet, keccak256, getBytes, sha256, toUtf8Bytes } from 'ethers'
 import { ripemd160 } from '@noble/hashes/ripemd160'
 import bs58 from 'bs58'
@@ -26,9 +26,16 @@ const verificationOutput = document.getElementById('verificationOutput')
 const vanityPrefixInput = document.getElementById('vanityPrefix')
 const vanityBtn = document.getElementById('vanityBtn')
 const vanityOutput = document.getElementById('vanityOutput')
+const vanityStopBtn = document.getElementById('vanityStopBtn')
 
 let currentSig = null
 let currentPub = null
+let isVanityRunning = false
+
+vanityStopBtn.addEventListener('click', () => {
+  isVanityRunning = false
+  vanityOutput.textContent += '\n⏹️ Search stopped.'
+})
 
 generateBtn.addEventListener('click', generateAddress)
 signBtn.addEventListener('click', signMessage)
@@ -145,10 +152,13 @@ function startVanitySearch() {
   }
 
 
+  isVanityRunning = true
   const start = Date.now()
   let attempts = 0
 
   function loop() {
+    if (!isVanityRunning) return
+
     const privKey = crypto.getRandomValues(new Uint8Array(32))
     const privHex = Array.from(privKey).map(b => b.toString(16).padStart(2, '0')).join('')
     const keyPair = ec.keyFromPrivate(privHex, 'hex')
@@ -183,10 +193,9 @@ function startVanitySearch() {
       address = P2WPKH(pubkeyHash)
       console.log('P2WPKH address:', address)
     } else if (isBtcP2TR) {
-      const pubX = pubPoint.getX().toString('hex').padStart(64, '0')
-      const xOnlyBytes = hexToBytes(pubX)
-      address = P2TR(xOnlyBytes)
-      console.log('P2TR address:', address)
+      alert('Taproot (P2TR) address generation is not implemented yet.')
+      return
+
     } else {
       const compressedPubKey = getCompressedPubKey(pubPoint)
       const pubkeyBytes = hexToBytes(compressedPubKey)
@@ -249,11 +258,6 @@ const P2WPKH = (hash) => {
   return bech32.encode('bc', words)
 }
 
+// TODO...
 // P2TR (Taproot) - prefix bc1p
 // SegWit version 1, Pay to Taproot
-function P2TR(pubkeyBytes) {
-  // pubkeyBytes should be 32 bytes (x-only pubkey)
-  const words = bech32.toWords(pubkeyBytes)
-  words.unshift(0x01) // witness version 1
-  return bech32m.encode('bc', words)
-}

@@ -52,11 +52,23 @@
       <h2>🎯 Vanity Address Generator</h2>
       <input id="vanityPrefix" type="text" placeholder="Prefix (e.g., 1BTC or 0xdead)" />
       <button id="vanityBtn">Start Generating</button>
+      <button id="vanityStopBtn">Stop</button>
+      
       <p><strong>Match Found:</strong> <span id="vanityOutput"></span></p>
-
       <p><strong>Attempts:</strong> <span id="vanityAttempts">0</span></p>
       <p><strong>Elapsed Time:</strong> <span id="vanityElapsed">0s</span></p>
 
+      <div class="vanity-help">
+        <h3>ℹ️ Address Type Reference</h3>
+        <ul>
+          <li><strong>Ethereum (0x...)</strong>: 20-byte address derived from <code>keccak256(pubkey)</code>. Commonly used for smart contracts and tokens on the Ethereum network.</li>
+          <li><strong>P2PKH (starts with 1)</strong>: Bitcoin legacy address. Broad wallet support but higher fees and slower adoption.</li>
+          <li><strong>P2SH-P2WPKH (starts with 3)</strong>: SegWit-compatible Bitcoin address. Lower fees and backward compatible.</li>
+          <li><strong>Bech32/P2WPKH (starts with bc1q)</strong>: Native SegWit. Lower fees and faster validation, but older wallets may not support.</li>
+          <li><strong>Taproot/P2TR (starts with bc1p)</strong>: Next-gen address type using Schnorr signatures. Used for enhanced privacy and scripting.</li>
+        </ul>
+        <p>Use vanity prefixes according to the address format above. For example: <code>0xabc</code>, <code>1doge</code>, <code>3cool</code>, <code>bc1q</code>, <code>bc1p</code>.</p>
+      </div>
     </div>
   </div>
 
