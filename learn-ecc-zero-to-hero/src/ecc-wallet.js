@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 import { ec as EC } from 'elliptic'
-import { Wallet, keccak256, getBytes, sha256, toUtf8Bytes } from 'ethers'
+import { Wallet, keccak256, getBytes, sha256 } from 'ethers'
 import { ripemd160 } from '@noble/hashes/ripemd160'
 import bs58 from 'bs58'
 
@@ -16,18 +16,8 @@ const publicKeyYField = document.getElementById('publicKeyY')
 const ethAddressField = document.getElementById('ethAddress')
 const btcLegacyField = document.getElementById('btcLegacy')
 const btcSegwitField = document.getElementById('btcSegwit')
-const messageInput = document.getElementById('messageInput')
-const signBtn = document.getElementById('signBtn')
-const verifyBtn = document.getElementById('verifyBtn')
-const signatureOutput = document.getElementById('signatureOutput')
-const verificationOutput = document.getElementById('verificationOutput')
-
-let currentSig = null
-let currentPub = null
 
 generateBtn.addEventListener('click', generateAddress)
-signBtn.addEventListener('click', signMessage)
-verifyBtn.addEventListener('click', verifySignature)
 
 function isValidPrivateKey(hex) {
   return /^[0-9a-fA-F]{64}$/.test(hex)
@@ -72,8 +62,6 @@ function generateAddress() {
   btcLegacyField.textContent = btcLegacy
   btcSegwitField.textContent = btcSegwit
 
-  currentPub = pubPoint
-
   if (ethersAddress.toLowerCase() === ethAddress.toLowerCase()) {
     console.log('%c✔ Ethereum address matches', 'color: green')
   } else {
@@ -85,31 +73,6 @@ function generateAddress() {
   } else {
     console.error('❌ Public key mismatch')
   }
-}
-
-function signMessage() {
-  const msg = messageInput.value.trim()
-  const privKeyHex = privateKeyInput.value.trim()
-  if (!msg || !isValidPrivateKey(privKeyHex)) return
-
-  const keyPair = ec.keyFromPrivate(privKeyHex, 'hex')
-  const msgHash = sha256(toUtf8Bytes(msg)).slice(2)
-  const sig = keyPair.sign(msgHash)
-  const r = sig.r.toString('hex')
-  const s = sig.s.toString('hex')
-  currentSig = sig
-  signatureOutput.textContent = `r: ${r}, s: ${s}`
-  verificationOutput.textContent = ''
-}
-
-function verifySignature() {
-  const msg = messageInput.value.trim()
-  if (!msg || !currentSig || !currentPub) return
-
-  const msgHash = sha256(toUtf8Bytes(msg)).slice(2)
-  const verified = ec.verify(msgHash, currentSig, currentPub)
-  verificationOutput.textContent = verified ? '✔ Valid Signature' : '❌ Invalid Signature'
-  verificationOutput.style.color = verified ? 'green' : 'red'
 }
 
 function hexToBytes(hex) {
