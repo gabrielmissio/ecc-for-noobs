@@ -2,85 +2,124 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <link rel="stylesheet" href="./style.css">
-  <title>ECC For Cripto Noobs</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ECC For Crypto Noobs</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+  <style>
+    body {
+      background: linear-gradient(to bottom right, #0f2027, #203a43, #2c5364);
+      color: #f0f0f0;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    main {
+      max-width: 960px;
+      margin: auto;
+      padding: 2rem;
+      background: #ffffff10;
+      border-radius: 16px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+    section {
+      margin-bottom: 3rem;
+      padding: 1.5rem;
+      border: 1px solid #ffffff20;
+      border-radius: 12px;
+      background-color: #1c1f26cc;
+    }
+    input[type="text"] {
+      background-color: #2c2f36;
+      border: 1px solid #ffffff30;
+      color: #ffffff;
+    }
+    button {
+      background-color: #2563eb;
+      color: white;
+      border: none;
+    }
+    button:hover {
+      background-color: #1e4ed8;
+    }
+    code {
+      background-color: #333;
+      padding: 0.2rem 0.4rem;
+      border-radius: 4px;
+      color: #84fab0;
+    }
+    h1, h2, h3, h4 {
+      color: #ffffff;
+    }
+    strong {
+      color: #93c5fd;
+    }
+    summary {
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Ethereum & Bitcoin Address Generator (secp256k1)</h1>
+  <main>
+    <h1>📚 Learn Elliptic Curve Cryptography (secp256k1) for Blockchain</h1>
+    <p>This interactive educational tool helps you understand the foundations of modern cryptography used in Bitcoin, Ethereum, and other blockchain platforms. You'll explore key generation, address formats, message signing, and more — all based on the secp256k1 curve used in ECDSA (Elliptic Curve Digital Signature Algorithm).</p>
 
-    <input id="privateKeyInput" type="text" placeholder="Enter private key (hex, 64 chars)" value="0000000000000000000000000000000000000000000000000000000000000001">
-    <button id="generateBtn">Generate Address</button>
+    <section id="keygen">
+      <h2>🔑 Key Generator</h2>
+      <p><em>Every blockchain wallet starts here: a random private key. Learn how it creates a unique public key, and how public keys are transformed into addresses used by Bitcoin and Ethereum.</em></p>
 
-    <div id="output">
-      <h2>Key Details</h2>
-      <p><strong>Private Key:</strong> <span id="privateKey"></span></p>
-      <p><strong>Public Key (full, uncompressed):</strong> <span id="publicKey"></span></p>
-      <p><strong>Public Key X:</strong> <span id="publicKeyX"></span></p>
-      <p><strong>Public Key Y:</strong> <span id="publicKeyY"></span></p>
+      <input id="privateKeyInput" type="text" placeholder="Private key (hex, 64 chars)" value="0000000000000000000000000000000000000000000000000000000000000001">
+      <button id="generateBtn">Generate Address</button>
 
-      <h2>Derived Addresses</h2>
-      <p><strong>Ethereum Address:</strong> <span id="ethAddress"></span></p>
-      <p><strong>Bitcoin Legacy Address (P2PKH):</strong> <span id="btcLegacy"></span></p>
-      <p><strong>Bitcoin SegWit Address (P2SH-P2WPKH):</strong> <span id="btcSegwit"></span></p>
-    </div>
+      <article>
+        <h3>Key Details</h3>
+        <p><strong>Private Key:</strong> <span id="privateKey"></span></p>
+        <p><strong>Public Key (Uncompressed):</strong> <span id="publicKey"></span></p>
+        <p><strong>X:</strong> <span id="publicKeyX"></span></p>
+        <p><strong>Y:</strong> <span id="publicKeyY"></span></p>
+      </article>
 
-    <div id="explanation">
-      <h2>📚 Learn: ECC & secp256k1</h2>
-      <p><strong>Private Key:</strong> A random number between 1 and n-1 (n = curve order).</p>
-      <p><strong>Public Key:</strong> Computed as <code>Q = k * G</code>, where:</p>
-      <ul>
-        <li><code>k</code>: private key</li>
-        <li><code>G</code>: generator point of secp256k1</li>
-        <li><code>Q</code>: public key point</li>
-      </ul>
-      <p><strong>Ethereum Address:</strong> last 20 bytes of <code>keccak256(X || Y)</code></p>
-      <p><strong>Bitcoin Address (P2PKH):</strong> base58check(SHA256 -> RIPEMD160 -> prepend 0x00 -> checksum)</p>
-      <p><strong>SegWit (P2SH-P2WPKH):</strong> script-hash of witness program</p>
-    </div>
+      <article>
+        <h3>Addresses</h3>
+        <p><strong>Ethereum:</strong> <span id="ethAddress"></span></p>
+        <p><strong>Bitcoin (P2PKH):</strong> <span id="btcLegacy"></span></p>
+        <p><strong>Bitcoin (P2SH-P2WPKH):</strong> <span id="btcSegwit"></span></p>
+      </article>
+    </section>
 
-    <div id="signing">
-      <h2>✍️ ECC Signing Demo</h2>
-      <p>This section demonstrates how digital signatures work using ECDSA over the secp256k1 curve.</p>
-      <ul>
-        <li>🔐 <strong>Private Key:</strong> used to generate the signature</li>
-        <li>📜 <strong>Message:</strong> any string you want to sign</li>
-        <li>🧮 <strong>Hash:</strong> the message is hashed with SHA-256 before signing</li>
-        <li>📌 <strong>Signature:</strong> a pair <code>{ r, s }</code> derived from the message hash and private key</li>
-        <li>✅ <strong>Verification:</strong> confirms if the signature is valid using the public key</li>
-      </ul>
+    <section id="signing">
+      <h2>✍️ Message Signing (ECDSA)</h2>
+      <p><em>This section demonstrates how you can digitally sign a message using a private key and later verify it using a public key. This is a core concept behind blockchain transaction authenticity.</em></p>
 
-      <input id="signerPrivateKey" type="text" placeholder="Enter private key (hex, 64 chars)" value="0000000000000000000000000000000000000000000000000000000000000001">
-      <input id="messageInput" type="text" placeholder="Message to sign" />
-      <button id="signBtn">Sign Message</button>
-      <button id="verifyBtn">Verify Signature</button>
+      <input id="signerPrivateKey" type="text" placeholder="Private key (hex, 64 chars)" value="0000000000000000000000000000000000000000000000000000000000000001">
+      <input id="messageInput" type="text" placeholder="Message to sign">
+      <button id="signBtn">Sign</button>
+      <button id="verifyBtn">Verify</button>
       <p><strong>Signature:</strong> <span id="signatureOutput"></span></p>
-      <p><strong>Verification:</strong> <span id="verificationOutput"></span></p>
-    </div>
+      <p><strong>Verification Result:</strong> <span id="verificationOutput"></span></p>
+    </section>
 
-    <div id="vanity">
+    <section id="vanity">
       <h2>🎯 Vanity Address Generator</h2>
-      <input id="vanityPrefix" type="text" placeholder="Prefix (e.g., 1BTC or 0xdead)" />
-      <button id="vanityBtn">Start Generating</button>
+      <p><em>Vanity addresses are custom-looking blockchain addresses that start with chosen characters. Try generating one! It's an example of brute-force searching over many keypairs.</em></p>
+  
+      <input id="vanityPrefix" type="text" placeholder="Prefix (e.g. 0xabc or 1btc)">
+      <button id="vanityBtn">Start</button>
       <button id="vanityStopBtn">Stop</button>
-      
-      <p><strong>Match Found:</strong> <span id="vanityOutput"></span></p>
+      <p><strong>Result:</strong> <span id="vanityOutput"></span></p>
       <p><strong>Attempts:</strong> <span id="vanityAttempts">0</span></p>
-      <p><strong>Elapsed Time:</strong> <span id="vanityElapsed">0s</span></p>
+      <p><strong>Time:</strong> <span id="vanityElapsed">0s</span></p>
 
-      <div class="vanity-help">
-        <h3>ℹ️ Address Type Reference</h3>
+      <details>
+        <summary>📘 What do prefixes mean?</summary>
         <ul>
-          <li><strong>Ethereum (0x...)</strong>: 20-byte address derived from <code>keccak256(pubkey)</code>. Commonly used for smart contracts and tokens on the Ethereum network.</li>
-          <li><strong>P2PKH (starts with 1)</strong>: Bitcoin legacy address. Broad wallet support but higher fees and slower adoption.</li>
-          <li><strong>P2SH-P2WPKH (starts with 3)</strong>: SegWit-compatible Bitcoin address. Lower fees and backward compatible.</li>
-          <li><strong>Bech32/P2WPKH (starts with bc1q)</strong>: Native SegWit. Lower fees and faster validation, but older wallets may not support.</li>
-          <li><strong>Taproot/P2TR (starts with bc1p)</strong>: Next-gen address type using Schnorr signatures. Used for enhanced privacy and scripting.</li>
+          <li><strong>Ethereum (0x...)</strong>: 20-byte keccak256(pubkey)</li>
+          <li><strong>P2PKH (1...)</strong>: Bitcoin legacy</li>
+          <li><strong>P2SH (3...)</strong>: SegWit compat</li>
+          <li><strong>bc1q...</strong>: Native SegWit</li>
+          <li><strong>bc1p...</strong>: Taproot</li>
         </ul>
-        <p>Use vanity prefixes according to the address format above. For example: <code>0xabc</code>, <code>1doge</code>, <code>3cool</code>, <code>bc1q</code>, <code>bc1p</code>.</p>
-      </div>
-    </div>
-  </div>
+      </details>
+    </section>
+  </main>
 
   <script type="module" src="./src/ecc-wallet.js"></script>
   <script type="module" src="./src/sign-verify.js"></script>
