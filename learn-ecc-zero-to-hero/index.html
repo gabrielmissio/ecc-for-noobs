@@ -82,6 +82,74 @@
       </details>
     </section>
 
+
+    <section id="ethTxBuilder">
+      <h2>🧱 Ethereum Transaction Builder</h2>
+      <p><em>This tool helps you learn how Ethereum transactions are constructed, signed, and broadcasted. Choose between legacy or EIP-1559 style transactions, input values manually or automatically fetch them from an RPC endpoint.</em></p>
+
+      <div class="grid">
+        <label for="ethTxMode">Transaction Type</label>
+        <select id="ethTxMode">
+          <option value="legacy">Legacy</option>
+          <option value="eip1559">EIP-1559</option>
+        </select>
+
+        <label for="ethTxKind">Transaction Kind</label>
+        <select id="ethTxKind">
+          <option value="transfer">Simple Transfer</option>
+          <option value="contract-deploy">Contract Deployment</option>
+          <option value="contract-call">Contract Call</option>
+        </select>
+
+        <label for="rpcUrl">RPC URL (optional for auto fill)</label>
+        <input type="text" id="rpcUrl" placeholder="https://mainnet.infura.io/v3/...">
+
+        <label for="senderAddress">Sender Address</label>
+        <input type="text" id="senderAddress" placeholder="0x...">
+
+        <label for="recipientAddress">Recipient / Contract Address</label>
+        <input type="text" id="recipientAddress" placeholder="0x... or leave blank for contract deploy">
+
+        <label for="valueEth">Value (ETH)</label>
+        <input type="text" id="valueEth" placeholder="0.1">
+
+        <label for="nonce">Nonce</label>
+        <input type="number" id="nonce" placeholder="0">
+
+        <label for="gasLimit">Gas Limit</label>
+        <input type="number" id="gasLimit" placeholder="21000">
+
+        <label for="gasPrice">Gas Price (wei)</label>
+        <input type="text" id="gasPrice" placeholder="Only for legacy">
+
+        <label for="maxFeePerGas">Max Fee Per Gas (wei)</label>
+        <input type="text" id="maxFeePerGas" placeholder="Only for EIP-1559">
+
+        <label for="maxPriorityFeePerGas">Max Priority Fee (wei)</label>
+        <input type="text" id="maxPriorityFeePerGas" placeholder="Only for EIP-1559">
+
+        <label for="data">Data (hex)</label>
+        <textarea id="data" rows="2" placeholder="0x..."></textarea>
+      </div>
+
+      <div style="margin-top: 1rem;">
+        <button id="autoFillTxParams">🔍 Fetch Nonce / Estimate Gas</button>
+        <button id="buildUnsignedTx">🧱 Build Transaction</button>
+        <button id="signTransaction">✍️ Sign Transaction</button>
+        <button id="broadcastTransaction">📡 Broadcast</button>
+      </div>
+
+      <article style="margin-top: 2rem;">
+        <h4>🔍 Raw & Signed Details</h4>
+        <p><strong>Unsigned TX (serialized):</strong> <code id="unsignedTx"></code></p>
+        <p><strong>Hash to Sign:</strong> <code id="txHashToSign"></code></p>
+        <p><strong>Signature (R, S, V):</strong> <code id="txSignature"></code></p>
+        <p><strong>Signed TX:</strong> <code id="signedTx"></code></p>
+        <p><strong>Broadcast Result:</strong> <span id="broadcastResult"></span></p>
+      </article>
+    </section>
+
+
     <section id="how-it-works">
       <h2 data-i18n="how_it_works_title">🧠 How It Works</h2>
       <p>This section breaks down how each cryptographic operation is implemented under the hood. Whether you're new to blockchain or want to deepen your ECC understanding, these insights will help.</p>
