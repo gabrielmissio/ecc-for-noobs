@@ -1,5 +1,6 @@
 /* eslint-disable no-undef */
 import bs58 from 'bs58'
+import { bech32 } from '@scure/base'
 import { ec as EC } from 'elliptic'
 import { ripemd160 } from '@noble/hashes/ripemd160'
 import { Wallet, keccak256, getBytes, sha256 } from 'ethers'
@@ -16,6 +17,7 @@ const publicKeyYField = document.getElementById('publicKeyY')
 const ethAddressField = document.getElementById('ethAddress')
 const btcLegacyField = document.getElementById('btcLegacy')
 const btcSegwitField = document.getElementById('btcSegwit')
+const btcShSegwitField = document.getElementById('btcShSegwit')
 
 generateBtn.addEventListener('click', generateAddress)
 
@@ -45,10 +47,11 @@ function generateAddress() {
 
   const pubkeyHash = hash160(pubkeyBytes)
   const btcLegacy = toBase58Check(pubkeyHash, 0x00)
+  const btcSegwit = toBech32Address(pubkeyHash)
 
   const segwitScript = new Uint8Array([0x00, 0x14, ...pubkeyHash])
   const redeemHash = hash160(segwitScript)
-  const btcSegwit = toBase58Check(redeemHash, 0x05)
+  const btcShSegwit = toBase58Check(redeemHash, 0x05)
 
   const ethersWallet = new Wallet(privKeyHex)
   const ethersPubKey = ethersWallet.signingKey.publicKey
@@ -61,6 +64,7 @@ function generateAddress() {
   ethAddressField.textContent = ethAddress
   btcLegacyField.textContent = btcLegacy
   btcSegwitField.textContent = btcSegwit
+  btcShSegwitField.textContent = btcShSegwit
 
   if (ethersAddress.toLowerCase() === ethAddress.toLowerCase()) {
     console.log('%c✔ Ethereum address matches', 'color: green')
@@ -84,6 +88,12 @@ function hash160(bytes) {
   const hash = sha256(bytes).slice(2)
   const shaBytes = hexToBytes(hash)
   return ripemd160(shaBytes)
+}
+
+const toBech32Address = (hash) => {
+  const words = bech32.toWords(hash)
+  words.unshift(0x00) // witness version 0
+  return bech32.encode('bc', words)
 }
 
 function toBase58Check(payload, version) {
