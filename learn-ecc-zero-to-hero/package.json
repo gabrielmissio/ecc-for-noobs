@@ -8,7 +8,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "aws s3 sync dist s3://$WEB_SITE_BUCKET --delete --include '*'"
+    "deploy": "aws s3 sync dist s3://$WEB_SITE_BUCKET --delete --include '*'",
+    "postdeploy": "aws cloudfront create-invalidation --distribution-id $WEB_SITE_CLOUDFRONT_ID --paths '/*'"
   },
   "keywords": [],
   "author": "",

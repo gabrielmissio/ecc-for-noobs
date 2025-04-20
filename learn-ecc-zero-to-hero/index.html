@@ -10,20 +10,29 @@
 </head>
 <body>
   <main>
+    <div id="languageSwitcherContainer">
+      <select id="languageSwitcher">
+        <option value="en">🇺🇸 English</option>
+        <option value="pt">🇧🇷 Português</option>
+      </select>
+    </div>
+    
     <div id="welcome">
-      <h1>📚 Learn Elliptic Curve Cryptography</h1>
-      <p>This interactive educational tool helps you understand the foundations of modern cryptography used in Bitcoin, Ethereum, and other blockchain platforms. You'll explore key generation, address formats, message signing, and more — all based on the secp256k1 curve used in ECDSA (Elliptic Curve Digital Signature Algorithm).</p>
+      <h1 data-i18n="welcome_title">📚 Learn Elliptic Curve Cryptography</h1>
+      <p data-i18n="welcome_description">This interactive educational tool helps you understand the foundations of modern cryptography used in Bitcoin, Ethereum, and other blockchain platforms...</p>
     </div>
 
     <section id="keygen">
-      <h2>🔑 Key Generator</h2>
-      <p><em>Every blockchain wallet starts here: a random private key. Learn how it creates a unique public key, and how public keys are transformed into addresses used by Bitcoin and Ethereum.</em></p>
+      <h2 data-i18n="keygen_title">🔑 Key Generator</h2>
+      <p data-i18n="keygen_description"><em>Every blockchain wallet starts here: a random private key...</em></p>
 
       <input id="privateKeyInput" type="text" placeholder="Private key (hex, 64 chars)" value="0000000000000000000000000000000000000000000000000000000000000001">
-      <button id="generateBtn">Generate Address</button>
+      <button data-i18n="keygen_generateBtn_label" id="generateBtn">Generate Address</button>
 
       <article>
-        <h3>Key Details</h3>
+        <!-- <p data-i18n="keygen_private_key"><strong>Private Key:</strong><span id="privateKey"></span></p>
+        <p data-i18n="keygen_public_key"><strong>Public Key (Uncompressed):</strong> <span id="publicKey"></span></p> -->
+        <h3 data-i18n="keygen_details">Key Details</h3>
         <p><strong>Private Key:</strong> <span id="privateKey"></span></p>
         <p><strong>Public Key (Uncompressed):</strong> <span id="publicKey"></span></p>
         <p><strong>X:</strong> <span id="publicKeyX"></span></p>
@@ -31,7 +40,7 @@
       </article>
 
       <article>
-        <h3>Addresses</h3>
+        <h3 data-i18n="keygen_addresses">Addresses</h3>
         <p><strong>Ethereum:</strong> <span id="ethAddress"></span></p>
         <p><strong>Bitcoin (P2PKH):</strong> <span id="btcLegacy"></span></p>
         <p><strong>Bitcoin (P2SH-P2WPKH):</strong> <span id="btcSegwit"></span></p>
@@ -39,8 +48,8 @@
     </section>
 
     <section id="signing">
-      <h2>✍️ Message Signing (ECDSA)</h2>
-      <p><em>This section demonstrates how you can digitally sign a message using a private key and later verify it using a public key. This is a core concept behind blockchain transaction authenticity.</em></p>
+      <h2 data-i18n="signing_title">✍️ Message Signing (ECDSA)</h2>
+      <p data-i18n="signing_description"><em>This section demonstrates how you can digitally sign a message...</em></p>
 
       <input id="signerPrivateKey" type="text" placeholder="Private key (hex, 64 chars)" value="0000000000000000000000000000000000000000000000000000000000000001">
       <input id="messageInput" type="text" placeholder="Message to sign">
@@ -51,8 +60,8 @@
     </section>
 
     <section id="vanity">
-      <h2>🎯 Vanity Address Generator</h2>
-      <p><em>Vanity addresses are custom-looking blockchain addresses that start with chosen characters. Try generating one! It's an example of brute-force searching over many keypairs.</em></p>
+      <h2 data-i18n="vanity_title">🎯 Vanity Address Generator</h2>
+      <p data-i18n="vanity_description"><em>Vanity addresses are custom-looking blockchain addresses that start with chosen characters...</em></p>
   
       <input id="vanityPrefix" type="text" placeholder="Prefix (e.g. 0xdead or 1btc)">
       <button id="vanityBtn">Start</button>
@@ -77,7 +86,7 @@
     </section>
 
     <section id="how-it-works">
-      <h2>🧠 How It Works</h2>
+      <h2 data-i18n="how_it_works_title">🧠 How It Works</h2>
       <p>This section breaks down how each cryptographic operation is implemented under the hood. Whether you're new to blockchain or want to deepen your ECC understanding, these insights will help.</p>
       <ul>
         <li><strong>🔑 Key Generation:</strong> Your private key is just a number between 1 and n-1. From it, a public key is derived using elliptic curve multiplication: <code>Q = k × G</code>.</li>
@@ -90,7 +99,7 @@
     </section>
 
     <section id="about">
-      <h2>📘 About This Tool</h2>
+      <h2 data-i18n="about_title">📘 About This Tool</h2>
       <p>This educational playground was built to teach developers, students, and crypto enthusiasts how elliptic curve cryptography powers blockchain security — especially on secp256k1, used by both Bitcoin and Ethereum. It's interactive, transparent, and designed to build your intuition.</p>
       <p>If you're learning, inspect the code, tweak parameters, and try unexpected inputs — it's a safe space to experiment with crypto fundamentals. 🚀</p>
     </section>
@@ -107,8 +116,6 @@
     </p>
   </footer>
 
-  <script type="module" src="./src/ecc-wallet.js"></script>
-  <script type="module" src="./src/sign-verify.js"></script>
-  <script type="module" src="./src/vanity-search.js"></script>
+  <script type="module" src="./src/main.js"></script>
 </body>
 </html>

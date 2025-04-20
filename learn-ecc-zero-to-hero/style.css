@@ -6,12 +6,32 @@ body {
 main {
     max-width: 960px;
     margin: auto;
-    padding: 0.5rem 1.5rem;
+    /* padding: 1.5rem 1.5rem !important; */
+    padding-top: 3rem !important;
+    padding-bottom: 0.5rem !important;
     background: #ffffff10;
     border-radius: 16px;
     backdrop-filter: blur(12px);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
+
+/* Language selector */
+#languageSwitcherContainer {
+    position: absolute;
+    top: 0.75rem;
+    right: 1rem;
+    z-index: 1000;
+}
+#languageSwitcher {
+    padding: 0.2rem 0.5rem;
+    font-size: 0.8rem;
+    width: auto;
+    border-radius: 4px;
+    background-color: #1f2937;
+    color: #f3f4f6;
+    border: 1px solid #374151;
+}
+
 section {
     margin-bottom: 3rem;
     padding: 1.5rem;
