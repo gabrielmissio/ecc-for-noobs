@@ -132,7 +132,7 @@ function startVanitySearch() {
       vanityElapsedTimeOutput.textContent = `${elapsed}s`
     }
 
-    setTimeout(loop, 0)
+    setTimeout(loop, 0) // Avoid "too much recursion" error
   }
 
   loop()

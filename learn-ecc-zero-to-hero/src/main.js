@@ -1,5 +1,6 @@
 /* eslint-disable no-undef */
 import './modules/ecc-wallet.js'
+import './modules/pow-demo.js'
 import './modules/sign-verify.js'
 import './modules/vanity-search.js'
 import { setLanguage, detectPreferredLanguage } from './i18n.js'

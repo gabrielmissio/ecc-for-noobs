@@ -82,6 +82,33 @@
       </details>
     </section>
 
+    <section id="powSection">
+      <h2>⛏️ Proof of Work Simulator</h2>
+      <p><em>Learn how Proof of Work operates by simulating mining. Adjust the difficulty, input a message, and let your browser find a nonce that results in a hash starting with a target number of zeros.</em></p>
+
+      <div>
+      <!-- <div class="grid"> -->
+        <label for="powDifficulty">Difficulty (leading zeros)</label>
+        <input type="number" id="powDifficulty" value="4" min="1" max="10">
+
+        <label for="powMessage">Block Message / Data</label>
+        <input type="text" id="powMessage" placeholder="Hello, blockchain!">
+      </div>
+
+      <div style="margin-top: 1rem;">
+        <button id="startPoW">⛏️ Start Mining</button>
+        <button id="stopPoW">🛑 Stop</button>
+      </div>
+
+      <article style="margin-top: 2rem;">
+        <h4>📦 Mining Output</h4>
+        <p><strong>Nonce:</strong> <span id="powNonce">-</span></p>
+        <p><strong>Hash:</strong> <code id="powHash">-</code></p>
+        <p><strong>Attempts:</strong> <span id="powAttempts">0</span></p>
+        <p><strong>Time Elapsed:</strong> <span id="powElapsed">0s</span></p>
+      </article>
+    </section>
+
     <section id="how-it-works">
       <h2 data-i18n="how_it_works_title">🧠 How It Works</h2>
       <p>This section breaks down how each cryptographic operation is implemented under the hood. Whether you're new to blockchain or want to deepen your ECC understanding, these insights will help.</p>
