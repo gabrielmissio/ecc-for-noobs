@@ -3,7 +3,6 @@ export default {
   language: 'English',
   welcome_title: '📚 Learn Elliptic Curve Cryptography',
   welcome_description: 'This interactive educational tool helps you understand the foundations of modern cryptography used in Bitcoin, Ethereum, and other blockchain platforms. You\'ll explore key generation, address formats, message signing, and more — all based on the secp256k1 curve used in ECDSA (Elliptic Curve Digital Signature Algorithm).',
-  how_it_works_title: '🧠 How It Works',
   about_title: '📘 About This Tool',
 
   // ecc-wallet module
@@ -37,4 +36,33 @@ export default {
   vanity_attempts_label: 'Attempts:',
   vanity_time_label: 'Time:',
   vanity_prefix_help_title: '📘 What do prefixes mean?',
+
+  // pow-demo module
+  pow_title: '⛏️ Proof of Work Simulator',
+  pow_description: 'Learn how Proof of Work operates by simulating mining. Adjust the difficulty, input a message, and let your browser find a nonce that results in a hash starting with a target number of zeros.',
+  pow_difficulty_label: 'Difficulty (leading zeros)',
+  pow_message_label: 'Block Message / Data',
+  pow_message_placeholder: 'Hello, blockchain!...',
+  pow_start_btn: '⛏️ Start Mining',
+  pow_stop_btn: '🛑 Stop',
+  pow_output_title: '📦 Mining Output',
+  pow_nonce_label: 'Nonce:',
+  pow_hash_label: 'Hash:',
+  pow_attempts_label: 'Attempts:',
+  pow_elapsed_label: 'Time Elapsed:',
+
+  // lorem ipsum
+  how_it_works_title: '🧠 How It Works',
+  how_it_works_description: 'This section breaks down how each cryptographic operation is implemented under the hood. Whether you\'re new to blockchain or want to deepen your ECC understanding, these insights will help.',
+  how_it_works_keygen_html: '🔑 Key Generation: Your private key is just a number between 1 and n-1. From it, a public key is derived using elliptic curve multiplication: Q = k × G.',
+  how_it_works_eth_address_html: '📬 Ethereum Address: Derived from the last 20 bytes of the keccak256 hash of the public key.',
+  how_it_works_btc_address_html: '💸 Bitcoin Address: Derived using HASH160 (SHA256 + RIPEMD160), followed by Base58Check encoding.',
+  how_it_works_signing_html: '✍️ Signing: A SHA256 hash of the message is signed using ECDSA, producing a signature pair { r, s }.',
+  how_it_works_verification_html: '✔️ Verification: The signature is validated using the public key against the message hash.',
+  how_it_works_vanity_html: '🎯 Vanity Generator: Repeats key generation until an address starts with your desired prefix — a fun demo of computational effort!',
+  how_it_works_pow_html: '⛏️ Proof of Work: Repeatedly hashes the block data + nonce until a hash is found that begins with a target number of leading zeros.',
+
+  // Lorem ipsum
+  about_description1: 'This educational playground was built to teach developers, students, and crypto enthusiasts how elliptic curve cryptography powers blockchain security — especially on secp256k1, used by both Bitcoin and Ethereum.',
+  about_description2: 'If you\'re learning, inspect the code, tweak parameters, and try unexpected inputs — it\'s a safe space to experiment with ECC fundamentals. 🚀',
 }
