@@ -18,6 +18,7 @@ export default {
   // sign-verify module
   signing_title: '✍️ Assinatura de Mensagens (ECDSA)',
   signing_description: 'Esta seção demonstra como assinar digitalmente uma mensagem usando uma chave privada e verificar essa assinatura com a chave pública. Este é um conceito essencial para garantir a autenticidade das transações em blockchain.',
+  signing_private_key_placeholder: 'Chave privada (hex, 64 caracteres)...',
   signing_message_to_sign_placeholder: 'Mensagem para assinar',
   signing_sign_btn_label: 'Assinar Mensagem',
   signing_verify_btn_label: 'Verificar Assinatura',
@@ -27,4 +28,13 @@ export default {
   // vanity-search module
   vanity_title: '🎯 Gerador de Endereços Personalizados',
   vanity_description: 'Endereços personalizados são endereços blockchain que começam com prefixos definidos por você. Tente gerar um! É um exemplo prático de busca por força bruta entre muitas chaves possíveis.',
+  vanity_prefix_placeholder: 'Prefixo (ex: 0xdead ou 1btc)...',
+  vanity_start_btn_label: 'Iniciar',
+  vanity_stop_btn_label: 'Parar',
+  vanity_status_label: 'Status:',
+  vanity_address_label: 'Endereço:',
+  vanity_private_key_label: 'Chave Privada:',
+  vanity_attempts_label: 'Tentativas:',
+  vanity_time_label: 'Tempo:',
+  vanity_prefix_help_title: '📘 O que significam os prefixos?',
 }

@@ -49,30 +49,53 @@
     <section id="signing">
       <h2 data-i18n="signing_title">✍️ Message Signing (ECDSA)</h2>
       <p data-i18n="signing_description"><em>This section demonstrates how you can digitally sign a message...</em></p>
-      <input id="signerPrivateKey" type="text" placeholder="Private key (hex, 64 chars)" value="0000000000000000000000000000000000000000000000000000000000000001">
-      <input id="messageInput" type="text" placeholder="Message to sign"> <!-- Handle i18n into input placeholder -->
-      <button data-i18n="signing_sign_btn_label" id="signBtn">Sign</button>
-      <button data-i18n="signing_verify_btn_label" id="verifyBtn">Verify</button>
+
+      <input
+        id="signerPrivateKey"
+        type="text"
+        data-i18n-placeholder="signing_private_key_placeholder"
+        placeholder="Private key (hex, 64 chars)..."
+        value="0000000000000000000000000000000000000000000000000000000000000001"
+      />
+
+      <input
+        id="messageInput"
+        type="text"
+        data-i18n-placeholder="signing_message_to_sign_placeholder"
+        placeholder="Message to sign..."
+      />
+
+      <button id="signBtn" data-i18n="signing_sign_btn_label">Sign</button>
+      <button id="verifyBtn" data-i18n="signing_verify_btn_label">Verify</button>
+
       <p><strong data-i18n="signing_signature_label">Signature:</strong> <span id="signatureOutput"></span></p>
       <p><strong data-i18n="signing_signature_result_label">Verification Result:</strong> <span id="verificationOutput"></span></p>
     </section>
 
     <section id="vanity">
       <h2 data-i18n="vanity_title">🎯 Vanity Address Generator</h2>
-      <p data-i18n="vanity_description"><em>Vanity addresses are custom-looking blockchain addresses that start with chosen characters...</em></p>
-  
-      <input id="vanityPrefix" type="text" placeholder="Prefix (e.g. 0xdead or 1btc)">
-      <button id="vanityBtn">Start</button>
-      <button id="vanityStopBtn">Stop</button>
-      <div id="vanityProgress">        
-        <p><strong>Status:</strong> <span id="vanityStatus">stopped</span></p>
-        <p><strong>Address:</strong> <span id="vanityAddress"></span></p>
-        <p><strong>Private Key:</strong> <span id="vanityPrivateKey"></span></p>
-        <p><strong>Attempts:</strong> <span id="vanityAttempts">0</span></p>
-        <p><strong>Time:</strong> <span id="vanityElapsedTime">...</span></p>
+      <p data-i18n="vanity_description"><em>Vanity addresses are custom-looking blockchain addresses...</em></p>
+
+      <input
+        id="vanityPrefix"
+        type="text"
+        data-i18n-placeholder="vanity_prefix_placeholder"
+        placeholder="Prefix (e.g. 0xdead or 1btc)..."
+      />
+
+      <button id="vanityBtn" data-i18n="vanity_start_btn_label">Start</button>
+      <button id="vanityStopBtn" data-i18n="vanity_stop_btn_label">Stop</button>
+
+      <div id="vanityProgress">
+        <p><strong data-i18n="vanity_status_label">Status:</strong> <span id="vanityStatus">stopped</span></p>
+        <p><strong data-i18n="vanity_address_label">Address:</strong> <span id="vanityAddress"></span></p>
+        <p><strong data-i18n="vanity_private_key_label">Private Key:</strong> <span id="vanityPrivateKey"></span></p>
+        <p><strong data-i18n="vanity_attempts_label">Attempts:</strong> <span id="vanityAttempts">0</span></p>
+        <p><strong data-i18n="vanity_time_label">Time:</strong> <span id="vanityElapsedTime">...</span></p>
       </div>
+
       <details>
-        <summary>📘 What do prefixes mean?</summary>
+        <summary data-i18n="vanity_prefix_help_title">📘 What do prefixes mean?</summary>
         <ul>
           <li><strong>Ethereum (0x...)</strong>: 20-byte keccak256(pubkey)</li>
           <li><strong>P2PKH (1...)</strong>: Bitcoin legacy</li>
