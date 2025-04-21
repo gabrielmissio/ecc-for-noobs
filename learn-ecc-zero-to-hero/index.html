@@ -152,14 +152,15 @@
             type="text"
             placeholder="Paste DER-encoded signature..."
           />
-        
-          <button id="verifyBtn">✔️ Verify</button>
-        
-          <div id="parsedSignatureFields">
+
+          <div id="parsedSignatureFields" style="display: none;">
+          <!-- <div id="parsedSignatureFields"> -->
             <p><strong>R:</strong> <span id="verifyParsedR">-</span></p>
             <p><strong>S:</strong> <span id="verifyParsedS">-</span></p>
           </div>
-        
+
+          <button id="verifyBtn">✔️ Verify</button>
+
           <p><strong>Verification Result:</strong>
             <span id="verificationOutput" style="font-weight: bold;"></span>
           </p>

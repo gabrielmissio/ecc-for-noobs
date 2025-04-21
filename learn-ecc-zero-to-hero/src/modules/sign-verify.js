@@ -18,8 +18,6 @@ const signatureBase64Output = document.getElementById('signatureBase64')
 const verifyBtn = document.getElementById('verifyBtn')
 const verifierPublicKey = document.getElementById('verifierPublicKey')
 const verifyMessageInput = document.getElementById('verifyMessageInput')
-// const verifyRInput = document.getElementById('verifyRInput')
-// const verifySInput = document.getElementById('verifySInput')
 const verificationOutput = document.getElementById('verificationOutput')
 
 signBtn.addEventListener('click', () => {
@@ -38,20 +36,6 @@ signBtn.addEventListener('click', () => {
   verificationOutput.style.color = 'initial'
 })
 
-// verifyBtn.addEventListener('click', () => {
-//   const msg = verifyMessageInput.value.trim()
-//   const pubKeyHex = verifierPublicKey.value.trim()
-//   const r = verifyRInput.value.trim()
-//   const s = verifySInput.value.trim()
-
-//   const valid = verifySignature(msg, pubKeyHex, r, s)
-//   if (valid === null) return
-
-//   verificationOutput.textContent = valid
-//     ? '✔ Signature is VALID for this message and public key.'
-//     : '❌ Signature is INVALID.'
-//   verificationOutput.style.color = valid ? 'green' : 'red'
-// })
 verifyBtn.addEventListener('click', () => {
   const msg = verifyMessageInput.value.trim()
   const pubKeyHex = verifierPublicKey.value.trim()
@@ -71,8 +55,8 @@ verifyBtn.addEventListener('click', () => {
   }
 
   // Update visible parsed R/S values
-  document.getElementById('verifyParsedR').textContent = sig.r
-  document.getElementById('verifyParsedS').textContent = sig.s
+  // document.getElementById('verifyParsedR').textContent = sig.r
+  // document.getElementById('verifyParsedS').textContent = sig.s
 
   const valid = verifySignature(msg, pubKeyHex, sig.r, sig.s)
   if (valid === null) return
@@ -174,3 +158,33 @@ function hexToBytes(hex) {
 // function stripLeadingZeros(bytes) {
 //   return bytes
 // }
+
+
+const derInput = document.getElementById('verifySignatureDER')
+const parsedRSpan = document.getElementById('verifyParsedR')
+const parsedSSpan = document.getElementById('verifyParsedS')
+const parsedFieldsBox = document.getElementById('parsedSignatureFields')
+
+derInput.addEventListener('input', () => {
+  const input = derInput.value.trim()
+
+  if (!input) {
+    parsedFieldsBox.style.display = 'none'
+    parsedRSpan.textContent = '-'
+    parsedSSpan.textContent = '-'
+    return
+  }
+
+  const sig = parseDERSignature(input)
+
+  if (!sig) {
+    parsedFieldsBox.style.display = 'none'
+    parsedRSpan.textContent = '-'
+    parsedSSpan.textContent = '-'
+    return
+  }
+
+  parsedRSpan.textContent = sig.r
+  parsedSSpan.textContent = sig.s
+  parsedFieldsBox.style.display = 'block'
+})
