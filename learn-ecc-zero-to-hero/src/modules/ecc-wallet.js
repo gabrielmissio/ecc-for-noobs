@@ -34,6 +34,7 @@ function generateRandomPrivateKey() {
   const privateKeyHex = Array.from(randomBytes, byte => byte.toString(16).padStart(2, '0')).join('')
 
   privateKeyInput.value = privateKeyHex
+  generateAddress()
 }
 
 function generateAddress() {

@@ -81,13 +81,93 @@
     
           <p><strong>R:</strong> <span id="signatureR">-</span></p>
           <p><strong>S:</strong> <span id="signatureS">-</span></p>
-          <p><strong>Signature (DER Hex):</strong> <span id="signatureDER">-</span></p>
-          <p><strong>Signature (Base64):</strong> <span id="signatureBase64">-</span></p>
+          <p><strong>Signature (DER Encoded Hex):</strong> <span id="signatureDER">-</span></p>
+          <p><strong>Signature (DER Encoded Base64):</strong> <span id="signatureBase64">-</span></p>
           <p><strong data-i18n="signing_public_key_result_label">Public Key (Uncompressed):</strong> <span id="generatedPublicKey">-</span></p>
         </article>
     
-        <!-- Verify -->
+<!--         
         <article>
+          <h3 data-i18n="signing_verify_block_title">✅ Verify a Signature</h3>
+        
+          <label for="verifierPublicKey" data-i18n="signing_verifier_pubkey_label">Public Key</label>
+          <input
+            id="verifierPublicKey"
+            type="text"
+            data-i18n-placeholder="signing_verifier_pubkey_placeholder"
+            placeholder="Public key (hex, 130 chars)..."
+          />
+        
+          <label for="verifyMessageInput" data-i18n="signing_verifier_message_label">Message</label>
+          <input
+            id="verifyMessageInput"
+            type="text"
+            data-i18n-placeholder="signing_verifier_message_placeholder"
+            placeholder="Message to verify..."
+          />
+
+          <details open>
+            <summary><strong>📦 Option A: Paste DER-encoded signature</strong></summary>
+            <label for="verifySignatureDER">Signature (Hex or Base64)</label>
+            <input id="verifySignatureDER" type="text" placeholder="DER-encoded signature..." />
+          </details>
+        
+          <details>
+            <summary><strong>🔓 Option B: Paste R + S values</strong></summary>
+            <label for="verifyRInput">R</label>
+            <input id="verifyRInput" type="text" placeholder="R component of signature (hex)..." />
+        
+            <label for="verifySInput">S</label>
+            <input id="verifySInput" type="text" placeholder="S component of signature (hex)..." />
+          </details>
+        
+          <button id="verifyBtn" data-i18n="signing_verify_btn_label">✔️ Verify</button>
+        
+          <p><strong data-i18n="signing_signature_result_label">Verification Result:</strong>
+            <span id="verificationOutput" style="font-weight: bold;"></span>
+          </p>
+        </article>
+         -->
+       
+         <article>
+          <h3>✅ Verify a Signature</h3>
+        
+          <label for="verifierPublicKey">Public Key</label>
+          <input
+            id="verifierPublicKey"
+            type="text"
+            placeholder="Public key (hex, 130 chars)..."
+          />
+        
+          <label for="verifyMessageInput">Message</label>
+          <input
+            id="verifyMessageInput"
+            type="text"
+            placeholder="Message to verify..."
+          />
+        
+          <label for="verifySignatureDER">Signature (DER - Hex or Base64)</label>
+          <input
+            id="verifySignatureDER"
+            type="text"
+            placeholder="Paste DER-encoded signature..."
+          />
+        
+          <button id="verifyBtn">✔️ Verify</button>
+        
+          <div id="parsedSignatureFields">
+            <p><strong>R:</strong> <span id="verifyParsedR">-</span></p>
+            <p><strong>S:</strong> <span id="verifyParsedS">-</span></p>
+          </div>
+        
+          <p><strong>Verification Result:</strong>
+            <span id="verificationOutput" style="font-weight: bold;"></span>
+          </p>
+        </article>
+        
+
+         <!-- Verify -->
+        <!-- <article>
           <h3 data-i18n="signing_verify_block_title">✅ Verify a Signature</h3>
     
           <label for="verifierPublicKey" data-i18n="signing_verifier_pubkey_label">Public Key</label>
@@ -125,7 +205,7 @@
           <p><strong data-i18n="signing_signature_result_label">Verification Result:</strong>
             <span id="verificationOutput" style="font-weight: bold;"></span>
           </p>
-        </article>
+        </article> -->
       </div>
     </section>
     
