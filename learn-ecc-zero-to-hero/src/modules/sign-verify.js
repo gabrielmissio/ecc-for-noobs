@@ -11,6 +11,8 @@ const signBtn = document.getElementById('signBtn')
 const signatureROutput = document.getElementById('signatureR')
 const signatureSOutput = document.getElementById('signatureS')
 const publicKeyOutput = document.getElementById('generatedPublicKey')
+const signatureDEROutput = document.getElementById('signatureDER')
+const signatureBase64Output = document.getElementById('signatureBase64')
 
 // DOM Elements – Verify section
 const verifyBtn = document.getElementById('verifyBtn')
@@ -30,6 +32,8 @@ signBtn.addEventListener('click', () => {
   signatureROutput.textContent = result.r
   signatureSOutput.textContent = result.s
   publicKeyOutput.textContent = result.pubKey
+  signatureDEROutput.textContent = result.derHex
+  signatureBase64Output.textContent = result.derBase64
   verificationOutput.textContent = ''
   verificationOutput.style.color = 'initial'
 })
@@ -58,9 +62,12 @@ export function signMessage(msg, privateKeyHex) {
 
   const r = sig.r.toString('hex')
   const s = sig.s.toString('hex')
+  const derBytes = Uint8Array.from(sig.toDER())
+  const derHex = Array.from(derBytes).map(b => b.toString(16).padStart(2, '0')).join('')
+  const derBase64 = btoa(String.fromCharCode(...derBytes))
   const pubKey = keyPair.getPublic().encode('hex')
 
-  return { r, s, pubKey }
+  return { r, s, derHex, derBase64, pubKey }
 }
 
 export function verifySignature(msg, pubKeyHex, rHex, sHex) {

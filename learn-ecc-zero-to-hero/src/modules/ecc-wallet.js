@@ -9,6 +9,7 @@ const ec = new EC('secp256k1')
 
 // DOM Elements
 const privateKeyInput = document.getElementById('privateKeyInput')
+const generateRandomBtn = document.getElementById('generateRandomBtn')
 const generateBtn = document.getElementById('generateBtn')
 const privateKeyField = document.getElementById('privateKey')
 const publicKeyField = document.getElementById('publicKey')
@@ -20,9 +21,19 @@ const btcSegwitField = document.getElementById('btcSegwit')
 const btcShSegwitField = document.getElementById('btcShSegwit')
 
 generateBtn.addEventListener('click', generateAddress)
+generateRandomBtn.addEventListener('click', generateRandomPrivateKey)
 
 function isValidPrivateKey(hex) {
   return /^[0-9a-fA-F]{64}$/.test(hex)
+}
+
+// For educational purposes only, not secure
+function generateRandomPrivateKey() {
+  const randomBytes = new Uint8Array(32)
+  window.crypto.getRandomValues(randomBytes)
+  const privateKeyHex = Array.from(randomBytes, byte => byte.toString(16).padStart(2, '0')).join('')
+
+  privateKeyInput.value = privateKeyHex
 }
 
 function generateAddress() {
