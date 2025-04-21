@@ -4,42 +4,49 @@ import { sha256, toUtf8Bytes } from 'ethers'
 
 const ec = new EC('secp256k1')
 
-let currentSig = null
-let currentPub = null
-
-// DOM Elements
+// DOM Elements – Sign section
 const messageInput = document.getElementById('messageInput')
-const signBtn = document.getElementById('signBtn')
-const verifyBtn = document.getElementById('verifyBtn')
-const signatureOutput = document.getElementById('signatureOutput')
-const verificationOutput = document.getElementById('verificationOutput')
 const signerPrivateKey = document.getElementById('signerPrivateKey')
+const signBtn = document.getElementById('signBtn')
+const signatureROutput = document.getElementById('signatureR')
+const signatureSOutput = document.getElementById('signatureS')
+const publicKeyOutput = document.getElementById('generatedPublicKey')
+
+// DOM Elements – Verify section
+const verifyBtn = document.getElementById('verifyBtn')
+const verifierPublicKey = document.getElementById('verifierPublicKey')
+const verifyMessageInput = document.getElementById('verifyMessageInput')
+const verifyRInput = document.getElementById('verifyRInput')
+const verifySInput = document.getElementById('verifySInput')
+const verificationOutput = document.getElementById('verificationOutput')
 
 signBtn.addEventListener('click', () => {
   const msg = messageInput.value.trim()
   const privKeyHex = signerPrivateKey.value.trim()
-  const result = signMessage(msg, privKeyHex)
 
-  if (result) {
-    const msgHash = sha256(toUtf8Bytes(msg)).slice(2)
-    signatureOutput.textContent = `
-        Message Hash: ${msgHash}\n
-        Private Key: ${privKeyHex}\n
-        Public Key: ${currentPub.encode('hex')}\n
-        Signature: { r: ${result.r}, s: ${result.s} }
-    `
-    verificationOutput.textContent = ''
-    verificationOutput.style.color = 'initial'
-  }
+  const result = signMessage(msg, privKeyHex)
+  if (!result) return
+
+  signatureROutput.textContent = result.r
+  signatureSOutput.textContent = result.s
+  publicKeyOutput.textContent = result.pubKey
+  verificationOutput.textContent = ''
+  verificationOutput.style.color = 'initial'
 })
 
 verifyBtn.addEventListener('click', () => {
-  const msg = messageInput.value.trim()
-  const verified = verifyMessage(msg)
-  if (verified === null) return
+  const msg = verifyMessageInput.value.trim()
+  const pubKeyHex = verifierPublicKey.value.trim()
+  const r = verifyRInput.value.trim()
+  const s = verifySInput.value.trim()
 
-  verificationOutput.textContent = verified ? '✔ Signature is VALID for this message and public key.' : '❌ Signature is INVALID.'
-  verificationOutput.style.color = verified ? 'green' : 'red'
+  const valid = verifySignature(msg, pubKeyHex, r, s)
+  if (valid === null) return
+
+  verificationOutput.textContent = valid
+    ? '✔ Signature is VALID for this message and public key.'
+    : '❌ Signature is INVALID.'
+  verificationOutput.style.color = valid ? 'green' : 'red'
 })
 
 export function signMessage(msg, privateKeyHex) {
@@ -48,22 +55,23 @@ export function signMessage(msg, privateKeyHex) {
   const keyPair = ec.keyFromPrivate(privateKeyHex, 'hex')
   const msgHash = sha256(toUtf8Bytes(msg)).slice(2)
   const sig = keyPair.sign(msgHash)
+
   const r = sig.r.toString('hex')
   const s = sig.s.toString('hex')
+  const pubKey = keyPair.getPublic().encode('hex')
 
-  currentSig = sig
-  currentPub = keyPair.getPublic()
-
-  return {
-    r, s,
-  }
+  return { r, s, pubKey }
 }
 
-export function verifyMessage(msg) {
-  if (!msg || !currentSig || !currentPub) return null
+export function verifySignature(msg, pubKeyHex, rHex, sHex) {
+  if (!msg || !pubKeyHex || !rHex || !sHex) return null
+  if (!/^04[0-9a-fA-F]{128}$/.test(pubKeyHex)) return null // uncompressed pubkey check
 
   const msgHash = sha256(toUtf8Bytes(msg)).slice(2)
-  return ec.verify(msgHash, currentSig, currentPub)
+  const pubKey = ec.keyFromPublic(pubKeyHex, 'hex')
+  const sigObj = { r: rHex, s: sHex }
+
+  return ec.verify(msgHash, sigObj, pubKey)
 }
 
 function isValidPrivateKey(hex) {

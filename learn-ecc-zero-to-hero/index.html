@@ -26,8 +26,11 @@
       <h2 data-i18n="keygen_title">🔑 Key Generator</h2>
       <p data-i18n="keygen_description"><em>Every blockchain wallet starts here: a random private key...</em></p>
 
-      <input id="privateKeyInput" type="text" placeholder="Private key (hex, 64 chars)" value="0000000000000000000000000000000000000000000000000000000000000001">
-      <button data-i18n="keygen_generateBtn_label" id="generateBtn">Generate Address</button>
+      <input id="privateKeyInput" type="text" placeholder="Private key (hex, 64 chars)">
+
+      <button id="generateRandomBtn">Generate Key </button>
+      <button id="generateBtn">Calculate Address</button>
+      <!-- <button data-i18n="keygen_generateBtn_label" id="generateBtn">Generate Address</button> -->
 
       <article>
         <h3 data-i18n="keygen_details">Key Details</h3>
@@ -48,29 +51,82 @@
 
     <section id="signing">
       <h2 data-i18n="signing_title">✍️ Message Signing (ECDSA)</h2>
-      <p data-i18n="signing_description"><em>This section demonstrates how you can digitally sign a message...</em></p>
-
-      <input
-        id="signerPrivateKey"
-        type="text"
-        data-i18n-placeholder="signing_private_key_placeholder"
-        placeholder="Private key (hex, 64 chars)..."
-        value="0000000000000000000000000000000000000000000000000000000000000001"
-      />
-
-      <input
-        id="messageInput"
-        type="text"
-        data-i18n-placeholder="signing_message_to_sign_placeholder"
-        placeholder="Message to sign..."
-      />
-
-      <button id="signBtn" data-i18n="signing_sign_btn_label">Sign</button>
-      <button id="verifyBtn" data-i18n="signing_verify_btn_label">Verify</button>
-
-      <p><strong data-i18n="signing_signature_label">Signature:</strong> <span id="signatureOutput"></span></p>
-      <p><strong data-i18n="signing_signature_result_label">Verification Result:</strong> <span id="verificationOutput"></span></p>
+      <p data-i18n="signing_description">
+        <em>Sign a message with your private key to get a signature composed of R and S. Then verify it with the public key.</em>
+      </p>
+    
+      <div>
+      <!-- <div class="grid"> -->
+        <!-- Sign -->
+        <article>
+          <h3 data-i18n="signing_sign_block_title">🔐 Sign a Message</h3>
+    
+          <label for="signerPrivateKey" data-i18n="signing_private_key_label">Private Key</label>
+          <input
+            id="signerPrivateKey"
+            type="text"
+            data-i18n-placeholder="signing_private_key_placeholder"
+            placeholder="Private key (hex, 64 chars)..."
+          />
+    
+          <label for="messageInput" data-i18n="signing_message_label">Message</label>
+          <input
+            id="messageInput"
+            type="text"
+            data-i18n-placeholder="signing_message_to_sign_placeholder"
+            placeholder="Message to sign..."
+          />
+    
+          <button id="signBtn" data-i18n="signing_sign_btn_label">✍️ Sign</button>
+    
+          <p><strong>R:</strong> <span id="signatureR">-</span></p>
+          <p><strong>S:</strong> <span id="signatureS">-</span></p>
+          <p><strong data-i18n="signing_public_key_result_label">Public Key (Uncompressed):</strong> <span id="generatedPublicKey">-</span></p>
+        </article>
+    
+        <!-- Verify -->
+        <article>
+          <h3 data-i18n="signing_verify_block_title">✅ Verify a Signature</h3>
+    
+          <label for="verifierPublicKey" data-i18n="signing_verifier_pubkey_label">Public Key</label>
+          <input
+            id="verifierPublicKey"
+            type="text"
+            data-i18n-placeholder="signing_verifier_pubkey_placeholder"
+            placeholder="Public key (hex, 130 chars)..."
+          />
+    
+          <label for="verifyMessageInput" data-i18n="signing_verifier_message_label">Message</label>
+          <input
+            id="verifyMessageInput"
+            type="text"
+            data-i18n-placeholder="signing_verifier_message_placeholder"
+            placeholder="Message to verify..."
+          />
+    
+          <label for="verifyRInput">R</label>
+          <input
+            id="verifyRInput"
+            type="text"
+            placeholder="R component of signature (hex)..."
+          />
+    
+          <label for="verifySInput">S</label>
+          <input
+            id="verifySInput"
+            type="text"
+            placeholder="S component of signature (hex)..."
+          />
+    
+          <button id="verifyBtn" data-i18n="signing_verify_btn_label">✔️ Verify</button>
+    
+          <p><strong data-i18n="signing_signature_result_label">Verification Result:</strong>
+            <span id="verificationOutput" style="font-weight: bold;"></span>
+          </p>
+        </article>
+      </div>
     </section>
+    
 
     <section id="vanity">
       <h2 data-i18n="vanity_title">🎯 Vanity Address Generator</h2>

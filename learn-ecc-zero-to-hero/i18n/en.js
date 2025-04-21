@@ -21,8 +21,31 @@ export default {
   signing_message_to_sign_placeholder: 'Message to sign',
   signing_sign_btn_label: 'Sign Message',
   signing_verify_btn_label: 'Verify Signature',
-  signing_signature_label: 'Signature: ',
+  // signing_signature_label: 'Signature: ',
   signing_signature_result_label: 'Verification Result: ',
+
+  signing_sign_block_title: '🔐 Sign a Message',
+  signing_verify_block_title: '✅ Verify a Signature',
+
+  signing_private_key_label: 'Private Key',
+  signing_message_label: 'Message',
+  signing_signature_label: 'Signature (hex):',
+  signing_public_key_result_label: 'Public Key (Uncompressed):',
+
+  signing_verifier_pubkey_label: 'Public Key',
+  signing_verifier_message_label: 'Message',
+  signing_verifier_signature_label: 'Signature',
+
+  signing_verifier_pubkey_placeholder: 'Public key (hex, 130 chars)...',
+  signing_verifier_message_placeholder: 'Message to verify...',
+  signing_verifier_signature_placeholder: 'Paste the signature...',
+
+  signing_signature_r_label: 'R',
+  signing_signature_s_label: 'S',
+  signing_verifier_r_placeholder: 'R component of signature (hex)...',
+  signing_verifier_s_placeholder: 'S component of signature (hex)...',
+
+
 
   // vanity-search module
   vanity_title: '🎯 Vanity Address Generator',
