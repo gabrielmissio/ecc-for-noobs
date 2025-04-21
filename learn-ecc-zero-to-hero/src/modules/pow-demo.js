@@ -1,6 +1,8 @@
 /* eslint-disable no-undef */
 import { sha256 } from 'ethers'
 
+const shouldTruncade = isSmallScreen()
+
 let mining = false
 let startTime = 0
 let attempts = 0
@@ -14,17 +16,14 @@ const powNonceOutput = document.getElementById('powNonce')
 const powHashOutput = document.getElementById('powHash')
 const powAttemptsOutput = document.getElementById('powAttempts')
 const powElapsedOutput = document.getElementById('powElapsed')
-
-function updatePoWUI(nonce, hash) {
-  powNonceOutput.textContent = nonce
-  powHashOutput.textContent = hash
-  powAttemptsOutput.textContent = attempts.toLocaleString()
-//   powElapsedOutput.textContent = ((Date.now() - startTime) / 1000).toFixed(2) + 's'
-}
+const powStatusOutput = document.getElementById('powStatus')
 
 function mine(message, difficulty) {
   const targetPrefix = '0'.repeat(difficulty)
+  powStatusOutput.textContent = 'running'
+
   let nonce = 0
+  mining = true
   attempts = 0
   startTime = Date.now()
 
@@ -39,11 +38,19 @@ function mine(message, difficulty) {
 
     if (hash.slice(2).startsWith(targetPrefix)) {
       mining = false
-      updatePoWUI(nonce, hash)
+      powStatusOutput.textContent = 'found'
+      powElapsedOutput.textContent = ((Date.now() - startTime) / 1000).toFixed(2) + 's'
+
+      powNonceOutput.textContent = nonce
+      powAttemptsOutput.textContent = attempts.toLocaleString()
+      powHashOutput.textContent = hash
+
       return
     }
 
-    updatePoWUI(nonce, hash)
+    powNonceOutput.textContent = nonce
+    powAttemptsOutput.textContent = attempts.toLocaleString()
+    powHashOutput.textContent = shouldTruncade ? truncateValue(hash, 27, 27) : hash
     if (attempts % 10 === 0) {
       powElapsedOutput.textContent = ((Date.now() - startTime) / 1000).toFixed(2) + 's'
     }
@@ -56,9 +63,10 @@ function mine(message, difficulty) {
 }
 
 startBtn.addEventListener('click', () => {
-  const message = powMessageInput.value.trim()
+  const message = powMessageInput.value.trim() || ''
   const difficulty = parseInt(powDifficultyInput.value)
-  if (!message || isNaN(difficulty) || difficulty < 1 || difficulty > 10) {
+  if (
+    typeof message !== 'string' || isNaN(difficulty) || difficulty < 1 || difficulty > 10) {
     alert('Invalid message or difficulty.')
     return
   }
@@ -68,5 +76,19 @@ startBtn.addEventListener('click', () => {
 })
 
 stopBtn.addEventListener('click', () => {
-  mining = false
+  if (mining) {
+    mining = false
+    powStatusOutput.textContent = 'stopped'
+  }
 })
+
+
+function isSmallScreen() {
+  return window.innerWidth < 768
+}
+
+function truncateValue(value, prefixLength = 14, suffixLength = 14) {
+  const prefix = value.slice(0, prefixLength)
+  const suffix = value.slice(-suffixLength)
+  return `${prefix}...${suffix}`
+}

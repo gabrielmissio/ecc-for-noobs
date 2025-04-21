@@ -46,6 +46,7 @@ export default {
   pow_start_btn: '⛏️ Start Mining',
   pow_stop_btn: '🛑 Stop',
   pow_output_title: '📦 Mining Output',
+  pow_status_label: 'Status:',
   pow_nonce_label: 'Nonce:',
   pow_hash_label: 'Hash:',
   pow_attempts_label: 'Attempts:',

@@ -6,6 +6,7 @@ import { ripemd160 } from '@noble/hashes/ripemd160'
 import { keccak256, getBytes, sha256 } from 'ethers'
 
 const ec = new EC('secp256k1')
+const shouldTruncade = isSmallScreen()
 
 // DOM Elements
 // Vanity Search Inputs
@@ -39,12 +40,6 @@ function startVanitySearch() {
   const isBtcP2WPKH = prefix.startsWith('bc1q')
   const isBtcP2TR = prefix.startsWith('bc1p')
 
-  console.log('Searching for prefix:', prefix)
-  console.log('isEth:', isEth)
-  console.log('isBtcP2PKH:', isBtcP2PKH)
-  console.log('isBtcP2SH:', isBtcP2SH)
-  console.log('isBtcP2WPKH:', isBtcP2WPKH)
-  console.log('isBtcP2TR:', isBtcP2TR)
   if (!isEth && !isBtcP2PKH && !isBtcP2SH && !isBtcP2WPKH && !isBtcP2TR) {
     return alert('Invalid prefix! Must start with 0x (ETH), 1 (BTC P2PKH), 3 (BTC P2SH), or bc1 (BTC Bech32)')
   }
@@ -57,9 +52,9 @@ function startVanitySearch() {
 
   isVanityRunning = true
   vanityStatusOutput.textContent = 'running'
-  vanityElapsedTimeOutput.textContent = '...'
-  vanityPrivateKeyOutput.textContent = '...'
-  vanityAddressOutput.textContent = '...'
+  // vanityElapsedTimeOutput.textContent = '-'
+  // vanityPrivateKeyOutput.textContent = '-'
+  // vanityAddressOutput.textContent = '-'
 
   const start = Date.now()
   let attempts = 0
@@ -122,8 +117,8 @@ function startVanitySearch() {
     }
 
     // Update the UI with the current attempt
-    vanityAddressOutput.textContent = address
-    vanityPrivateKeyOutput.textContent = privHex
+    vanityAddressOutput.textContent = shouldTruncade ? truncateValue(address, 11, 11) : address
+    vanityPrivateKeyOutput.textContent = shouldTruncade ? truncateValue(privHex, 14 ,14) : privHex
 
     // Real-time update every 10 attempts
     if (attempts % 10 === 0) {
@@ -136,6 +131,16 @@ function startVanitySearch() {
   }
 
   loop()
+}
+
+function isSmallScreen() {
+  return window.innerWidth < 768
+}
+
+function truncateValue(value, prefixLength = 14, suffixLength = 14) {
+  const prefix = value.slice(0, prefixLength)
+  const suffix = value.slice(-suffixLength)
+  return `${prefix}...${suffix}`
 }
 
 function hexToBytes(hex) {

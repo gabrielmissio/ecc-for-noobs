@@ -88,10 +88,10 @@
 
       <div id="vanityProgress">
         <p><strong data-i18n="vanity_status_label">Status:</strong> <span id="vanityStatus">stopped</span></p>
-        <p><strong data-i18n="vanity_address_label">Address:</strong> <span id="vanityAddress"></span></p>
-        <p><strong data-i18n="vanity_private_key_label">Private Key:</strong> <span id="vanityPrivateKey"></span></p>
+        <p><strong data-i18n="vanity_address_label">Address:</strong> <span id="vanityAddress">-</span></p>
+        <p><strong data-i18n="vanity_private_key_label">Private Key:</strong> <span id="vanityPrivateKey">-</span></p>
         <p><strong data-i18n="vanity_attempts_label">Attempts:</strong> <span id="vanityAttempts">0</span></p>
-        <p><strong data-i18n="vanity_time_label">Time:</strong> <span id="vanityElapsedTime">...</span></p>
+        <p><strong data-i18n="vanity_time_label">Time:</strong> <span id="vanityElapsedTime">-</span></p>
       </div>
 
       <details>
@@ -117,9 +117,9 @@
         <input
           type="number"
           id="powDifficulty"
-          value="4"
+          value="3"
           min="1"
-          max="10"
+          max="32"
         />
     
         <label for="powMessage" data-i18n="pow_message_label">Block Message / Data</label>
@@ -136,14 +136,16 @@
         <button id="stopPoW" data-i18n="pow_stop_btn">🛑 Stop</button>
       </div>
     
-      <article style="margin-top: 2rem;">
+      <article>
         <h4 data-i18n="pow_output_title">📦 Mining Output</h4>
+        <p><strong data-i18n="pow_status_label">Status:</strong> <span id="powStatus">-</span></p>
         <p><strong data-i18n="pow_nonce_label">Nonce:</strong> <span id="powNonce">-</span></p>
-        <p><strong data-i18n="pow_hash_label">Hash:</strong> <code id="powHash">-</code></p>
+        <!-- <p><strong data-i18n="pow_hash_label">Hash:</strong> <code id="powHash">-</code></p> -->
+        <p><strong data-i18n="pow_hash_label">Hash:</strong> <span id="powHash">-</span></p>
         <p><strong data-i18n="pow_attempts_label">Attempts:</strong> <span id="powAttempts">0</span></p>
         <p><strong data-i18n="pow_elapsed_label">Time Elapsed:</strong> <span id="powElapsed">0s</span></p>
       </article>
-    </section>    
+    </section> 
 
     <section id="how-it-works">
       <h2 data-i18n="how_it_works_title">🧠 How It Works</h2>
