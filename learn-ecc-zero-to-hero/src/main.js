@@ -14,3 +14,29 @@ document.getElementById('languageSwitcher').addEventListener('change', (e) => {
   newURL.searchParams.set('lang', e.target.value)
   window.history.replaceState(null, '', newURL)
 })
+
+window.addEventListener('DOMContentLoaded', () => {
+  setupCopyToClipboard()
+})
+
+function setupCopyToClipboard() {
+  document.querySelectorAll('[data-copy]').forEach(el => {
+    el.style.cursor = 'pointer'
+    el.title = 'Click to copy'
+
+    el.addEventListener('click', () => {
+      const text = el.textContent.trim()
+      if (!text || text === '-' || text === '...') return
+
+      navigator.clipboard.writeText(text).then(() => {
+        const original = el.textContent
+        el.textContent = '✅ Copied!'
+        setTimeout(() => {
+          el.textContent = original
+        }, 1000)
+      }).catch(err => {
+        console.error('Failed to copy:', err)
+      })
+    })
+  })
+}

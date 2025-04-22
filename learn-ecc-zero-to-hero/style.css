@@ -112,3 +112,16 @@ footer p {
 footer strong {
     color: #f3f4f6;
 }
+
+[data-copy] {
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+[data-copy]:hover {
+    color: #60a5fa;
+}
+
+[data-copy].copied {
+    color: #93c5fd;
+}

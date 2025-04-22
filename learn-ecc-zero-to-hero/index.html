@@ -43,23 +43,21 @@
       </small>
 
       <button data-i18n="keygen_generateBtn_label" id="generateRandomBtn">Generate Key </button>
-      <!-- <button id="generateBtn">Calculate Address</button> -->
-      <!-- <button data-i18n="keygen_generateBtn_label" id="generateBtn">Generate Address</button> -->
 
       <article>
         <h3 data-i18n="keygen_details">Key Details</h3>
-        <p><strong data-i18n="keygen_private_key">Private Key:</strong><span id="privateKey"></span></p>
-        <p><strong data-i18n="keygen_public_key">Public Key (Uncompressed):</strong> <span id="publicKey"></span></p>
-        <p><strong>X:</strong> <span id="publicKeyX"></span></p>
-        <p><strong>Y:</strong> <span id="publicKeyY"></span></p>
+        <p><strong data-i18n="keygen_private_key">Private Key:</strong><span id="privateKey" data-copy></span></p>
+        <p><strong data-i18n="keygen_public_key">Public Key (Uncompressed):</strong> <span id="publicKey" data-copy></span></p>
+        <p><strong>X:</strong> <span id="publicKeyX" data-copy></span></p>
+        <p><strong>Y:</strong> <span id="publicKeyY" data-copy></span></p>
       </article>
 
       <article>
         <h3 data-i18n="keygen_addresses">Addresses</h3>
-        <p><strong>Ethereum:</strong> <span id="ethAddress"></span></p>
-        <p><strong>Bitcoin (P2PKH):</strong> <span id="btcLegacy"></span></p>
-        <p><strong>Bitcoin (P2WPKH):</strong> <span id="btcSegwit"></span></p>
-        <p><strong>Bitcoin (P2SH-P2WPKH):</strong> <span id="btcShSegwit"></span></p>
+        <p><strong>Ethereum:</strong> <span id="ethAddress" data-copy></span></p>
+        <p><strong>Bitcoin (P2PKH):</strong> <span id="btcLegacy" data-copy></span></p>
+        <p><strong>Bitcoin (P2WPKH):</strong> <span id="btcSegwit" data-copy></span></p>
+        <p><strong>Bitcoin (P2SH-P2WPKH):</strong> <span id="btcShSegwit" data-copy></span></p>
       </article>
     </section>
 
@@ -93,11 +91,11 @@
     
           <button id="signBtn" data-i18n="signing_sign_btn_label">✍️ Sign</button>
     
-          <p><strong>R:</strong> <span id="signatureR">-</span></p>
-          <p><strong>S:</strong> <span id="signatureS">-</span></p>
-          <p><strong>Signature (DER Encoded Hex):</strong> <span id="signatureDER">-</span></p>
-          <p><strong>Signature (DER Encoded Base64):</strong> <span id="signatureBase64">-</span></p>
-          <p><strong data-i18n="signing_public_key_result_label">Public Key (Uncompressed):</strong> <span id="generatedPublicKey">-</span></p>
+          <p><strong>R:</strong> <span id="signatureR" data-copy>-</span></p>
+          <p><strong>S:</strong> <span id="signatureS" data-copy>-</span></p>
+          <p><strong>Signature (DER Encoded Hex):</strong> <span id="signatureDER" data-copy>-</span></p>
+          <p><strong>Signature (DER Encoded Base64):</strong> <span id="signatureBase64" data-copy>-</span></p>
+          <p><strong data-i18n="signing_public_key_result_label">Public Key (Uncompressed):</strong> <span id="generatedPublicKey" data-copy>-</span></p>
         </article>
     
 <!--         
@@ -241,8 +239,8 @@
 
       <div id="vanityProgress">
         <p><strong data-i18n="vanity_status_label">Status:</strong> <span id="vanityStatus">stopped</span></p>
-        <p><strong data-i18n="vanity_address_label">Address:</strong> <span id="vanityAddress">-</span></p>
-        <p><strong data-i18n="vanity_private_key_label">Private Key:</strong> <span id="vanityPrivateKey">-</span></p>
+        <p><strong data-i18n="vanity_address_label">Address:</strong> <span id="vanityAddress" data-copy>-</span></p>
+        <p><strong data-i18n="vanity_private_key_label">Private Key:</strong> <span id="vanityPrivateKey" data-copy>-</span></p>
         <p><strong data-i18n="vanity_attempts_label">Attempts:</strong> <span id="vanityAttempts">0</span></p>
         <p><strong data-i18n="vanity_time_label">Time:</strong> <span id="vanityElapsedTime">-</span></p>
       </div>
@@ -292,9 +290,8 @@
       <article>
         <h4 data-i18n="pow_output_title">📦 Mining Output</h4>
         <p><strong data-i18n="pow_status_label">Status:</strong> <span id="powStatus">-</span></p>
-        <p><strong data-i18n="pow_nonce_label">Nonce:</strong> <span id="powNonce">-</span></p>
-        <!-- <p><strong data-i18n="pow_hash_label">Hash:</strong> <code id="powHash">-</code></p> -->
-        <p><strong data-i18n="pow_hash_label">Hash:</strong> <span id="powHash">-</span></p>
+        <p><strong data-i18n="pow_nonce_label">Nonce:</strong> <span id="powNonce" data-copy>-</span></p>
+        <p><strong data-i18n="pow_hash_label">Hash:</strong> <span id="powHash" data-copy>-</span></p>
         <p><strong data-i18n="pow_attempts_label">Attempts:</strong> <span id="powAttempts">0</span></p>
         <p><strong data-i18n="pow_elapsed_label">Time Elapsed:</strong> <span id="powElapsed">0s</span></p>
       </article>
