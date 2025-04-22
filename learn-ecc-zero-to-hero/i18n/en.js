@@ -7,12 +7,14 @@ export default {
 
   // ecc-wallet module
   keygen_title: '🔑 Key Generator',
-  keygen_description: 'Every blockchain wallet starts here: a random private key (integer between one and 2²⁵⁶ - 2³² - 977). Learn how it creates a unique public key, and how public keys are transformed into addresses used by Bitcoin and Ethereum.',
-  keygen_generateBtn_label: 'Generate Address',
+  keygen_description: 'Every blockchain wallet starts here: a random private key (integer between 1 and 2²⁵⁶ - 2³² - 977). Learn how it creates a unique public key, and how public keys are transformed into addresses used by Bitcoin and Ethereum.',
+  keygen_generateBtn_label: 'Generate Random Key',
+  keygen_private_key_placeholder: 'Private key (hex, 64 chars)...',
   keygen_details: 'Key pair details',
   keygen_private_key: 'Private Key: ',
   keygen_public_key: 'Public Key (Uncompressed): ',
-  keygen_addresses: 'Addresses (Bitcoin e Ethereum)',
+  keygen_addresses: 'Addresses',
+  // keygen_addresses: 'Addresses (Bitcoin and Ethereum)',
 
   // sign-verify module
   signing_title: '✍️ Message Signing (ECDSA)',

@@ -6,11 +6,15 @@ import { ripemd160 } from '@noble/hashes/ripemd160'
 import { Wallet, keccak256, getBytes, sha256 } from 'ethers'
 
 const ec = new EC('secp256k1')
+let previousInputValue = ''
 
 // DOM Elements
 const privateKeyInput = document.getElementById('privateKeyInput')
 const generateRandomBtn = document.getElementById('generateRandomBtn')
-const generateBtn = document.getElementById('generateBtn')
+const charCounter = document.getElementById('charCounter')
+const byteCounter = document.getElementById('byteCounter')
+const bitCounter = document.getElementById('bitCounter')
+
 const privateKeyField = document.getElementById('privateKey')
 const publicKeyField = document.getElementById('publicKey')
 const publicKeyXField = document.getElementById('publicKeyX')
@@ -20,8 +24,44 @@ const btcLegacyField = document.getElementById('btcLegacy')
 const btcSegwitField = document.getElementById('btcSegwit')
 const btcShSegwitField = document.getElementById('btcShSegwit')
 
-generateBtn.addEventListener('click', generateAddress)
 generateRandomBtn.addEventListener('click', generateRandomPrivateKey)
+privateKeyInput.addEventListener('input', handlePrivateKeyInput)
+
+
+function handlePrivateKeyInput(e) {
+  let raw = e.target.value.toUpperCase()
+  let sanitized = raw.replace(/[^0-9A-F]/g, '')
+
+  if (sanitized.length > 64) {
+    sanitized = sanitized.slice(0, 64)
+  }
+
+  // Normalize input (enforced visually)
+  e.target.value = sanitized
+
+  // Avoid re-processing the same value
+  if (sanitized === previousInputValue) return
+  previousInputValue = sanitized
+
+  updateCounters()
+
+  if (sanitized.length === 0 || /^0+$/.test(sanitized)) {
+    clearOutputFields()
+    return
+  }
+
+  // Pad left with 0s if shorter than 64
+  const padded = sanitized.padStart(64, '0')
+  generateAddress(padded)
+}
+
+
+function updateCounters() {
+  const val = privateKeyInput.value.trim()
+  charCounter.textContent = `${val.length} / 64 chars`
+  bitCounter.textContent = `${val.length * 4} / 256 bits`
+  byteCounter.textContent = `${Math.floor(val.length / 2)} / 32 bytes`
+}
 
 function isValidPrivateKey(hex) {
   return /^[0-9a-fA-F]{64}$/.test(hex)
@@ -34,11 +74,11 @@ function generateRandomPrivateKey() {
   const privateKeyHex = Array.from(randomBytes, byte => byte.toString(16).padStart(2, '0')).join('')
 
   privateKeyInput.value = privateKeyHex
-  generateAddress()
+  generateAddress(privateKeyHex)
+  updateCounters()
 }
 
-function generateAddress() {
-  const privKeyHex = privateKeyInput.value.trim()
+function generateAddress(privKeyHex) {
   if (!isValidPrivateKey(privKeyHex)) {
     alert('Invalid private key! Enter exactly 64 hex chars.')
     return
@@ -122,4 +162,15 @@ function getCompressedPubKey(pubPoint) {
   const y = BigInt('0x' + pubPoint.getY().toString('hex'))
   const prefix = y % 2n === 0n ? '02' : '03'
   return prefix + x
+}
+
+function clearOutputFields() {
+  privateKeyField.textContent = ''
+  publicKeyField.textContent = ''
+  publicKeyXField.textContent = ''
+  publicKeyYField.textContent = ''
+  ethAddressField.textContent = ''
+  btcLegacyField.textContent = ''
+  btcSegwitField.textContent = ''
+  btcShSegwitField.textContent = ''
 }

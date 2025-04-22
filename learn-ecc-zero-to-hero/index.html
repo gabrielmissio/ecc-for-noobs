@@ -26,10 +26,24 @@
       <h2 data-i18n="keygen_title">🔑 Key Generator</h2>
       <p data-i18n="keygen_description"><em>Every blockchain wallet starts here: a random private key...</em></p>
 
-      <input id="privateKeyInput" type="text" placeholder="Private key (hex, 64 chars)">
+      <input
+        type="text"
+        id="privateKeyInput"
+        placeholder="Private key (hex, 64 chars)"
+        data-i18n-placeholder="keygen_private_key_placeholder"
+        maxlength="64"
+        autocomplete="off"
+        spellcheck="false"
+      />
+    
+      <small>
+        <span id="charCounter">0 / 64 chars</span> —
+        <span id="bitCounter">0 / 256 bits</span> —
+        <span id="byteCounter">0 / 32 bytes</span>
+      </small>
 
-      <button id="generateRandomBtn">Generate Key </button>
-      <button id="generateBtn">Calculate Address</button>
+      <button data-i18n="keygen_generateBtn_label" id="generateRandomBtn">Generate Key </button>
+      <!-- <button id="generateBtn">Calculate Address</button> -->
       <!-- <button data-i18n="keygen_generateBtn_label" id="generateBtn">Generate Address</button> -->
 
       <article>

@@ -7,12 +7,14 @@ export default {
 
   // ecc-wallet module
   keygen_title: '🔑 Gerador de Chaves',
-  keygen_description: 'Toda carteira blockchain começa aqui: uma chave privada aleatória (numero inteiro entre um e 2²⁵⁶ - 2³² - 977). Aprenda como ela gera uma chave pública única e como essas chaves são transformadas em endereços utilizados pelo Bitcoin e Ethereum.',
-  keygen_generateBtn_label: 'Gerar Endereço',
+  keygen_description: 'Toda carteira blockchain começa aqui: uma chave privada aleatória (numero inteiro entre 1 e 2²⁵⁶ - 2³² - 977). Aprenda como ela gera uma chave pública única e como essas chaves são transformadas em endereços utilizados pelo Bitcoin e Ethereum.',
+  keygen_private_key_placeholder: 'Chave privada (hex, 64 caracteres)...',
+  keygen_generateBtn_label: 'Gerar Chave Aleatória',
   keygen_details: 'Detalhes do par de chaves',
   keygen_private_key: 'Chave Privada: ',
   keygen_public_key: 'Chave Pública (Não Compactada): ',
-  keygen_addresses: 'Endereços (Bitcoin e Ethereum)',
+  keygen_addresses: 'Endereços',
+  // keygen_addresses: 'Endereços (Bitcoin e Ethereum)',
 
   // sign-verify module
   signing_title: '✍️ Assinatura de Mensagens (ECDSA)',
